@@ -16,7 +16,7 @@ class RouteGenerator {
     switch (settings.name){
       case initialRoute:
         return _getPageRoute(const MainSplashScreen());
-        
+
       // case login:
       //   return _getPageRoute(LoginPage());
       // case signUp:
