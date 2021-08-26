@@ -1,6 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 import 'package:skitoboxes/router/route_generator.dart';
@@ -16,14 +16,61 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryTextTheme: TextTheme(
+          headline5: TextStyle(
+            fontFamily: 'Akira',
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+          headline6: TextStyle(
+            fontFamily: 'Akira',
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            fontFamily: 'Avenir',
+            fontSize: 14,
+            color: Colors.black,
+          ),
+          bodyText2: TextStyle(
+            fontFamily: 'Avenir',
+            fontSize: 18,
+            color: Colors.black,
+          ),
+        ),
+        primarySwatch: MaterialColor(0xFFFFB703, color),
+        primaryColor: yellow,
+        accentColor: darkBlue,
+        scaffoldBackgroundColor: Colors.white,
+        cardColor: blue,
+        dividerColor: lightBlue,
+        focusColor: yellow,
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            primary: darkBlue,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            onPrimary: Colors.white,
+            primary: darkBlue,
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            primary: orange,
+          ),
+        ),
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: initialRoute,

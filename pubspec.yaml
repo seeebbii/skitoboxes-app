@@ -80,6 +80,11 @@ flutter:
     - family: Akira
       fonts:
         - asset: assets/fonts/akira_expanded.otf
+    - family: Avenir
+      fonts:
+        - asset: assets/fonts/AvenirLTStd-Black.otf
+        - asset: assets/fonts/AvenirLTStd-Book.otf
+        - asset: assets/fonts/AvenirLTStd-Roman.otf
     # - family: Trajan Pro
     #   fonts:
     #     - asset: fonts/TrajanPro.ttf
