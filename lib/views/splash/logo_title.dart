@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ScreenTitle extends StatelessWidget {
+class LogoTitle extends StatelessWidget {
   final String? text;
 
-  ScreenTitle({Key? key, this.text}) : super(key: key);
+  LogoTitle({Key? key, this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

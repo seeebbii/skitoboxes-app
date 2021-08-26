@@ -1,11 +1,13 @@
 // STATIC ROUTES NAME
 import 'package:flutter/material.dart';
+import 'package:skitoboxes/views/authentication/body.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
 import 'package:skitoboxes/views/splash/main_splash_screen.dart';
 
 const String initialRoute = '/';
 const String signUp = '/signup';
 const String landing = '/landing';
+const String bodyAuth = '/bodyAuth';
 
 // TODO : ROUTES GENERATOR CLASS THAT CONTROLS THE FLOW OF NAVIGATION/ROUTING
 
@@ -21,6 +23,9 @@ class RouteGenerator {
 
       case landing:
         return _getPageRoute(LandingPage());
+
+      case bodyAuth:
+        return _getPageRoute(BodyAuth());
 
       default:
         return _errorRoute();

@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/constants/colors.dart';
+import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 import 'package:skitoboxes/views/authentication/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
-
-  void loginSheet(BuildContext ctx) {
-    showModalBottomSheet(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        isScrollControlled: true,
-        context: ctx,
-        builder: (context) {
-          return ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            child: Container(
-              height: MediaQuery.of(ctx).size.height * 0.90,
-              child: SignupScreen(),
-            ),
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +13,6 @@ class LoginScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: ElevatedButton(
-                  onPressed: () => NavigationController.instance.goBack(),
-                  child: Icon(Icons.close, color: Colors.black),
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    shape: CircleBorder(),
-                    primary: Colors.grey.shade300.withOpacity(0.6),
-                  ),
-                ),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Text(
@@ -123,10 +91,13 @@ class LoginScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.15),
-            Text("Don't have account?",
+            Text("Don't have an account?",
                 style: Theme.of(context).textTheme.bodyText1),
             TextButton(
-              onPressed: () => loginSheet(context),
+              onPressed: () => navigationController.sheetController
+                  .animateToPage(1,
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.easeInOut),
               child: Text(
                 'SIGN UP',
                 style: Theme.of(context)

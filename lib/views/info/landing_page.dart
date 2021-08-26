@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
+import 'package:skitoboxes/router/route_generator.dart';
+import 'package:skitoboxes/views/authentication/body.dart';
 import 'package:skitoboxes/views/authentication/login_screen.dart';
 
 class LandingPage extends StatelessWidget {
@@ -6,6 +9,8 @@ class LandingPage extends StatelessWidget {
 
   void loginSheet(BuildContext ctx) {
     showModalBottomSheet(
+        isDismissible: true,
+        enableDrag: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -16,7 +21,7 @@ class LandingPage extends StatelessWidget {
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             child: Container(
               height: MediaQuery.of(ctx).size.height * 0.90,
-              child: LoginScreen(),
+              child: BodyAuth(),
             ),
           );
         });

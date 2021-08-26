@@ -5,7 +5,7 @@ import 'package:skitoboxes/constants/colors.dart';
 import 'package:rive/rive.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 import 'package:skitoboxes/router/route_generator.dart';
-import 'package:skitoboxes/views/splash/screen_title.dart';
+import 'package:skitoboxes/views/splash/logo_title.dart';
 
 class MainSplashScreen extends StatefulWidget {
   const MainSplashScreen({Key? key}) : super(key: key);
@@ -34,11 +34,11 @@ class _MainSplashScreenState extends State<MainSplashScreen> {
               height: 130,
               width: 130,
               child: RiveAnimation.asset(
-                'assets/animation/logo.riv',
+                'assets/animation/logo_white.riv',
               ),
             ),
             Container(
-              child: ScreenTitle(text: 'SKITO'),
+              child: LogoTitle(text: 'SKITO'),
             ),
           ],
         ),
