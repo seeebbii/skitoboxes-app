@@ -9,6 +9,7 @@ const String signUp = '/signup';
 const String landing = '/landing';
 const String bodyAuth = '/bodyAuth';
 
+// ignore: todo
 // TODO : ROUTES GENERATOR CLASS THAT CONTROLS THE FLOW OF NAVIGATION/ROUTING
 
 class RouteGenerator {

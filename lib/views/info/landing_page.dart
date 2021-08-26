@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
-import 'package:skitoboxes/router/route_generator.dart';
 import 'package:skitoboxes/views/authentication/body.dart';
-import 'package:skitoboxes/views/authentication/login_screen.dart';
 
 class LandingPage extends StatelessWidget {
   LandingPage({Key? key}) : super(key: key);

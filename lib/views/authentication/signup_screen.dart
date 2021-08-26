@@ -4,7 +4,6 @@ import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 import 'package:skitoboxes/views/authentication/login_screen.dart';
-import 'package:skitoboxes/views/splash/logo_title.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);

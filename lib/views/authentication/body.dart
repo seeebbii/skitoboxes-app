@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
-import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 import 'package:skitoboxes/views/authentication/login_screen.dart';
 import 'package:skitoboxes/views/authentication/signup_screen.dart';
 
-class BodyAuth extends StatefulWidget {
-  @override
-  _BodyAuthState createState() => _BodyAuthState();
-}
-
-class _BodyAuthState extends State<BodyAuth> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class BodyAuth extends StatelessWidget {
+  const BodyAuth({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
