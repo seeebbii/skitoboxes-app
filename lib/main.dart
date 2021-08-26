@@ -29,22 +29,11 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
-          headline6: TextStyle(
-            fontFamily: 'Akira',
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
         ),
         textTheme: TextTheme(
           bodyText1: TextStyle(
             fontFamily: 'Avenir',
             fontSize: 14,
-            color: Colors.black,
-          ),
-          bodyText2: TextStyle(
-            fontFamily: 'Avenir',
-            fontSize: 18,
             color: Colors.black,
           ),
         ),
@@ -63,7 +52,7 @@ class MyApp extends StatelessWidget {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             onPrimary: Colors.white,
-            primary: darkBlue,
+            primary: orange,
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(

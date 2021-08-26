@@ -31,10 +31,20 @@ class LandingPage extends StatelessWidget {
           children: [
             Text(
               'Noting to show rightnow',
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
             ElevatedButton(
-                onPressed: () => loginSheet(context), child: Text('Login'))
+                onPressed: () => loginSheet(context),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Log in',
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .headline5!
+                        .copyWith(color: Colors.white),
+                  ),
+                ))
           ],
         ),
       ),
