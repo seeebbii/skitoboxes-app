@@ -3,28 +3,9 @@ import 'package:rive/rive.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
-import 'package:skitoboxes/views/authentication/login_screen.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
-
-  void loginSheet(BuildContext ctx) {
-    showModalBottomSheet(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        isScrollControlled: true,
-        context: ctx,
-        builder: (context) {
-          return ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            child: Container(
-              height: MediaQuery.of(ctx).size.height * 0.90,
-              child: LoginScreen(),
-            ),
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
