@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.codeminers.skitoboxes.skitoboxes">
+    package="com.haz.skitoboxes">
    <application
         android:label="skitoboxes"
         android:icon="@mipmap/ic_launcher">

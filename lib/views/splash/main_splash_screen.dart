@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:rive/rive.dart';
+import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 import 'package:skitoboxes/router/route_generator.dart';
 import 'package:skitoboxes/views/splash/logo_title.dart';
@@ -18,8 +19,8 @@ class _MainSplashScreenState extends State<MainSplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 4),
-        () => NavigationController.instance.getOffAll(landing));
+    Timer(const Duration(seconds: 4),
+        () => navigationController.getOffAll(landing));
   }
 
   @override
@@ -33,7 +34,7 @@ class _MainSplashScreenState extends State<MainSplashScreen> {
             Container(
               height: 130,
               width: 130,
-              child: RiveAnimation.asset(
+              child: const RiveAnimation.asset(
                 'assets/animation/logo_white.riv',
               ),
             ),

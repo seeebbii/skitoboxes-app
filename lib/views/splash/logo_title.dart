@@ -8,7 +8,7 @@ class LogoTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
       builder: (BuildContext context, double _val, child) {
         return Opacity(
           opacity: _val,
@@ -22,7 +22,7 @@ class LogoTitle extends StatelessWidget {
       curve: Curves.easeIn,
       child: Text(
         text!,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
           fontFamily: 'Akira',
           fontSize: 40,

@@ -3,8 +3,34 @@ import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen>
+    with AutomaticKeepAliveClientMixin<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String? _userEmail, _userPassword;
+  bool obSecure = true;
+
+  void _trySubmit() {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      _formKey.currentState!.save();
+
+      //Login user on auth request
+      // authServiceController.loginUser(_userEmail!, _userPassword!);
+    }
+  }
+
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,23 +49,62 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: Theme.of(context).textTheme.bodyText1,
+            Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: emailController,
+                      validator: (value) {
+                        if (value!.isEmpty || !value.contains("@")) {
+                          return 'Please enter a valid email address';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _userEmail = value;
+                      },
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: Theme.of(context).textTheme.bodyText1,
+                      ),
                     ),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  )
-                ],
+                    TextFormField(
+                      obscureText: obSecure,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your Password';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _userPassword = value;
+                      },
+                      textInputAction: TextInputAction.done,
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        suffixIcon: obSecure
+                            ? IconButton(
+                                icon: const Icon(Icons.visibility_off_outlined),
+                                onPressed: () =>
+                                    setState(() => obSecure = !obSecure),
+                              )
+                            : IconButton(
+                                icon: const Icon(
+                                  Icons.visibility_outlined,
+                                ),
+                                onPressed: () =>
+                                    setState(() => obSecure = !obSecure),
+                              ),
+                        labelText: 'Password',
+                        labelStyle: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.1),
@@ -52,12 +117,18 @@ class LoginScreen extends StatelessWidget {
                     'SIGN IN',
                     style: Theme.of(context).primaryTextTheme.headline5,
                   ),
-                  OutlinedButton(
-                      onPressed: () => NavigationController.instance.goBack(),
-                      child: Icon(Icons.arrow_forward_ios),
-                      style: OutlinedButton.styleFrom(
-                        shape: CircleBorder(),
-                      )),
+                  FloatingActionButton(
+                    onPressed: _trySubmit,
+                    child: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                    ),
+                    backgroundColor: Theme.of(context)
+                        .floatingActionButtonTheme
+                        .backgroundColor,
+                    elevation:
+                        Theme.of(context).floatingActionButtonTheme.elevation,
+                  ),
                 ],
               ),
             ),
@@ -76,16 +147,16 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () => NavigationController.instance.goBack(),
-                  child: Text('f'),
+                  onPressed: () => navigationController.goBack(),
+                  child: const Text('f'),
                   style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 50)),
+                      padding: const EdgeInsets.symmetric(horizontal: 50)),
                 ),
                 ElevatedButton(
-                  onPressed: () => NavigationController.instance.goBack(),
-                  child: Text('G'),
+                  onPressed: () => navigationController.goBack(),
+                  child: const Text('G'),
                   style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 50)),
+                      padding: const EdgeInsets.symmetric(horizontal: 50)),
                 ),
               ],
             ),
@@ -95,7 +166,7 @@ class LoginScreen extends StatelessWidget {
             TextButton(
               onPressed: () => navigationController.sheetController
                   .animateToPage(1,
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut),
               child: Text(
                 'SIGN UP',
@@ -110,4 +181,8 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

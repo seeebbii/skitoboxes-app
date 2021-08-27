@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skitoboxes/views/authentication/body.dart';
+import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
 
 class LandingPage extends StatelessWidget {
   LandingPage({Key? key}) : super(key: key);
@@ -15,10 +15,10 @@ class LandingPage extends StatelessWidget {
         context: ctx,
         builder: (context) {
           return ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             child: Container(
-              height: MediaQuery.of(ctx).size.height * 0.90,
-              child: BodyAuth(),
+              height: MediaQuery.of(ctx).size.height * 0.95,
+              child: const AuthPageViewer(),
             ),
           );
         });
@@ -32,7 +32,7 @@ class LandingPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Noting to show rightnow',
+              'Noting to show right now',
               style: Theme.of(context).textTheme.bodyText1,
             ),
             ElevatedButton(

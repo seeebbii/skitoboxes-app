@@ -4,8 +4,37 @@ import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen>
+    with AutomaticKeepAliveClientMixin<SignupScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String? _userName, _userEmail, _userPassword;
+  bool obSecure = true;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  String? _userPhone;
+  TextEditingController phoneController = TextEditingController();
+
+  void _trySubmit() {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      _formKey.currentState!.save();
+      // IF THE DATA IS VALIDATED, TAKE USER TO OTP SCREEN FOR CONFIRMATION
+      navigationController.sheetController.animateToPage(2, duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +47,7 @@ class SignupScreen extends StatelessWidget {
                 Container(
                   height: 60,
                   width: 60,
-                  child: RiveAnimation.asset(
+                  child: const RiveAnimation.asset(
                     'assets/animation/logo_orange.riv',
                   ),
                 ),
@@ -58,37 +87,102 @@ class SignupScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Username',
-                      labelStyle: Theme.of(context).textTheme.bodyText1,
+            Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _userName = value;
+                      },
+                      controller: nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Username',
+                        labelStyle: Theme.of(context).textTheme.bodyText1,
+                      ),
                     ),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: Theme.of(context).textTheme.bodyText1,
+                    TextFormField(
+                      textInputAction: TextInputAction.next,
+                      controller: emailController,
+                      validator: (value) {
+                        if (value!.isEmpty || !value.contains("@")) {
+                          return 'Please enter a valid email address';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _userEmail = value;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: Theme.of(context).textTheme.bodyText1,
+                      ),
                     ),
-                  ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: Theme.of(context).textTheme.bodyText1,
+                    TextFormField(
+                      textInputAction: TextInputAction.done,
+                      controller: passwordController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your password';
+                        } else if (value.length < 8) {
+                          return "your password must have 8 characters";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _userPassword = value;
+                      },
+                      obscureText: obSecure,
+                      decoration: InputDecoration(
+                        suffixIcon: obSecure
+                            ? IconButton(
+                                icon: const Icon(Icons.visibility_off_outlined),
+                                onPressed: () =>
+                                    setState(() => obSecure = !obSecure),
+                              )
+                            : IconButton(
+                                icon: const Icon(
+                                  Icons.visibility_outlined,
+                                ),
+                                onPressed: () =>
+                                    setState(() => obSecure = !obSecure),
+                              ),
+                        labelText: 'Password',
+                        labelStyle: Theme.of(context).textTheme.bodyText1,
+                      ),
                     ),
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: 'Phone',
-                      labelStyle: Theme.of(context).textTheme.bodyText1,
+                    TextFormField(
+                      maxLength: 9,
+                      textInputAction: TextInputAction.done,
+                      controller: phoneController,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your phone number';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _userPhone = value;
+                      },
+                      decoration: InputDecoration(
+
+                        prefixText: '+ 92 - 3',
+                        labelText: 'Phone',
+                        labelStyle: Theme.of(context).textTheme.bodyText1,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.07),
@@ -98,15 +192,20 @@ class SignupScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'SIGN UP',
+                    'VERIFICATION',
                     style: Theme.of(context).primaryTextTheme.headline5,
                   ),
-                  OutlinedButton(
-                    onPressed: () => NavigationController.instance.goBack(),
-                    child: Icon(Icons.arrow_forward_ios),
-                    style: OutlinedButton.styleFrom(
-                      shape: CircleBorder(),
+                  FloatingActionButton(
+                    onPressed: _trySubmit,
+                    child: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
                     ),
+                    backgroundColor: Theme.of(context)
+                        .floatingActionButtonTheme
+                        .backgroundColor,
+                    elevation:
+                        Theme.of(context).floatingActionButtonTheme.elevation,
                   ),
                 ],
               ),
@@ -117,7 +216,7 @@ class SignupScreen extends StatelessWidget {
             TextButton(
               onPressed: () => navigationController.sheetController
                   .animateToPage(0,
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut),
               child: Text(
                 'SIGN IN',
@@ -132,4 +231,8 @@ class SignupScreen extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

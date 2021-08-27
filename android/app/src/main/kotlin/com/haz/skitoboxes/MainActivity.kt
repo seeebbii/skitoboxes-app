@@ -1,4 +1,4 @@
-package com.codeminers.skitoboxes.skitoboxes
+package com.haz.skitoboxes
 
 import io.flutter.embedding.android.FlutterActivity
 

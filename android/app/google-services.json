@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "646099392997",
+    "project_id": "skito-ec52b",
+    "storage_bucket": "skito-ec52b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:646099392997:android:c054ac22b7fc80213f370c",
+        "android_client_info": {
+          "package_name": "com.haz.skitoboxes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "646099392997-m8e95ku2n1cd4c9m3so33h33gj5av5uj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.haz.skitoboxes",
+            "certificate_hash": "e43bb9337d27cc433eb306ea4dc8bcc86df38549"
+          }
+        },
+        {
+          "client_id": "646099392997-gf865lhvebiupgc1vusar4o3g8cqgn1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMSBRbJVSuP343yJjrA4OwgadqXNQtT2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "646099392997-gf865lhvebiupgc1vusar4o3g8cqgn1j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

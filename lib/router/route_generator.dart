@@ -1,6 +1,6 @@
 // STATIC ROUTES NAME
 import 'package:flutter/material.dart';
-import 'package:skitoboxes/views/authentication/body.dart';
+import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
 import 'package:skitoboxes/views/splash/main_splash_screen.dart';
 
@@ -26,7 +26,7 @@ class RouteGenerator {
         return _getPageRoute(LandingPage());
 
       case bodyAuth:
-        return _getPageRoute(BodyAuth());
+        return _getPageRoute(AuthPageViewer());
 
       default:
         return _errorRoute();
