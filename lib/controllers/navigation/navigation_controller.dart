@@ -8,15 +8,7 @@ class NavigationController extends GetxController {
     initialPage: 0,
   );
 
-
-  @override
-  void onInit() {
-    super.onInit();
-    sheetController.addListener(() {
-
-    });
-  }
-
+  
   static NavigationController instance = Get.find();
   final GlobalKey<NavigatorState> navigationKey = GlobalKey();
 
