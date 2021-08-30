@@ -3,7 +3,6 @@ import 'package:rive/rive.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 
-
 class OtpScreen extends StatefulWidget {
   const OtpScreen({Key? key}) : super(key: key);
 
@@ -11,10 +10,9 @@ class OtpScreen extends StatefulWidget {
   _OtpScreenState createState() => _OtpScreenState();
 }
 
-class _OtpScreenState extends State<OtpScreen>  with AutomaticKeepAliveClientMixin<OtpScreen> {
-
+class _OtpScreenState extends State<OtpScreen>
+    with AutomaticKeepAliveClientMixin<OtpScreen> {
   final _formKey = GlobalKey<FormState>();
-
 
   void _trySubmit() {
     final isValid = _formKey.currentState!.validate();
@@ -84,9 +82,7 @@ class _OtpScreenState extends State<OtpScreen>  with AutomaticKeepAliveClientMix
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: Column(
-                  children: [
-
-                  ],
+                  children: [],
                 ),
               ),
             ),
@@ -101,7 +97,7 @@ class _OtpScreenState extends State<OtpScreen>  with AutomaticKeepAliveClientMix
                     style: Theme.of(context).primaryTextTheme.headline5,
                   ),
                   FloatingActionButton(
-                    onPressed: (){},
+                    onPressed: () {},
                     child: const Icon(
                       Icons.arrow_forward_ios,
                       color: Colors.white,
@@ -110,7 +106,7 @@ class _OtpScreenState extends State<OtpScreen>  with AutomaticKeepAliveClientMix
                         .floatingActionButtonTheme
                         .backgroundColor,
                     elevation:
-                    Theme.of(context).floatingActionButtonTheme.elevation,
+                        Theme.of(context).floatingActionButtonTheme.elevation,
                   ),
                 ],
               ),
@@ -125,5 +121,4 @@ class _OtpScreenState extends State<OtpScreen>  with AutomaticKeepAliveClientMix
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
-
 }

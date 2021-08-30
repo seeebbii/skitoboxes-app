@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
 
 class LandingPage extends StatelessWidget {
@@ -41,6 +42,20 @@ class LandingPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Log in',
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .headline5!
+                        .copyWith(color: Colors.white),
+                  ),
+                )),
+            ElevatedButton(
+                onPressed: () {
+                  navigationController.navigateTo('/home-screen');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Jump to Home',
                     style: Theme.of(context)
                         .primaryTextTheme
                         .headline5!

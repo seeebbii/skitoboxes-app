@@ -1,5 +1,6 @@
 // STATIC ROUTES NAME
 import 'package:flutter/material.dart';
+import 'package:skitoboxes/home_screen.dart';
 import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
 import 'package:skitoboxes/views/splash/main_splash_screen.dart';
@@ -8,6 +9,7 @@ const String initialRoute = '/';
 const String signUp = '/signup';
 const String landing = '/landing';
 const String bodyAuth = '/bodyAuth';
+const String homeScreen = '/home-screen';
 
 // ignore: todo
 // TODO : ROUTES GENERATOR CLASS THAT CONTROLS THE FLOW OF NAVIGATION/ROUTING
@@ -27,6 +29,9 @@ class RouteGenerator {
 
       case bodyAuth:
         return _getPageRoute(AuthPageViewer());
+
+      case homeScreen:
+        return _getPageRoute(HomeScreen());
 
       default:
         return _errorRoute();
