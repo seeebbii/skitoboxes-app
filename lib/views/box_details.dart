@@ -211,7 +211,7 @@ class _BoxDetailsState extends State<BoxDetails> {
                   style: ElevatedButton.styleFrom(
                     primary: darkBlue,
                     elevation: 0,
-                    fixedSize: Size(0, 55),
+                    fixedSize: Size(400, 55),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
