@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:like_button/like_button.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/controllers/product/product_controller.dart';
 import 'package:skitoboxes/models/box.dart';
-import 'package:like_button/like_button.dart';
+
 
 class BoxDetails extends StatefulWidget {
   BoxDetails({Key? key, @required this.box}) : super(key: key);
@@ -26,9 +27,12 @@ class _BoxDetailsState extends State<BoxDetails> {
   }
 
   Future<bool> onLikeButtonTapped(bool isLiked) async {
-    if (!isLiked) {
+    if (isFav == false) {
       _profileController.favoriteBoxes.add(widget.box!);
     } else {
+      setState(() {
+        isFav = false;
+      });
       _profileController.favoriteBoxes.remove(widget.box!);
     }
 
@@ -90,6 +94,10 @@ class _BoxDetailsState extends State<BoxDetails> {
                   child: LikeButton(
                       onTap: onLikeButtonTapped,
                       likeBuilder: (bool isLiked) {
+                        if(isFav != false){
+                          return Icon(Icons.favorite,
+                              color: orange );
+                        }
                         return Icon(Icons.favorite,
                             color: isLiked ? orange : Colors.grey);
                       }),
