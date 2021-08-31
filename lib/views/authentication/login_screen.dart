@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
-import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
+import 'package:skitoboxes/constants/custom_snackbar.dart';
+import 'package:skitoboxes/router/route_generator.dart';
+import 'package:skitoboxes/utils/auth_exception_handler.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -16,7 +18,8 @@ class _LoginScreenState extends State<LoginScreen>
   String? _userEmail, _userPassword;
   bool obSecure = true;
 
-  void _trySubmit() {
+
+  void _trySubmit() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
@@ -24,7 +27,16 @@ class _LoginScreenState extends State<LoginScreen>
       _formKey.currentState!.save();
 
       //Login user on auth request
-      // authServiceController.loginUser(_userEmail!, _userPassword!);
+      final status = await authController.loginUser(_userEmail!, _userPassword!);
+      if(status == AuthResultStatus.successful){
+        CustomSnackBar.showSnackBar(title: "Login Successful", message: '', backgroundColor: snackBarSuccess);
+
+        navigationController.navigateTo(homeScreen);
+
+      }else{
+        final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
+        CustomSnackBar.showSnackBar(title: errorMsg, message: '', backgroundColor: snackBarError);
+      }
     }
   }
 

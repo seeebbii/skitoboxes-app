@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/constants/controllers.dart';
-import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 import 'package:skitoboxes/views/authentication/login_screen.dart';
 import 'package:skitoboxes/views/authentication/otp_screen.dart';
 import 'package:skitoboxes/views/authentication/signup_screen.dart';
@@ -14,6 +13,9 @@ class AuthPageViewer extends StatefulWidget {
 
 class _AuthPageViewerState extends State<AuthPageViewer> {
   int currentPage = 0;
+
+
+
 
   @override
   Widget build(BuildContext context) {

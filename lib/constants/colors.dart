@@ -6,6 +6,9 @@ const darkBlue = Color(0xFF023047);
 const blue = Color(0xFF219EBC);
 const lightBlue = Color(0xFF8ECAE6);
 
+const snackBarError =  Colors.red;
+const snackBarSuccess =  Colors.green;
+
 const Map<int, Color> color = {
   50: Color.fromRGBO(136, 14, 79, .1),
   100: Color.fromRGBO(136, 14, 79, .2),

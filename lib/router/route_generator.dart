@@ -19,16 +19,13 @@ class RouteGenerator {
   static Route<dynamic> onGeneratedRoutes(RouteSettings settings) {
     switch (settings.name) {
       case initialRoute:
-        return _getPageRoute(MainSplashScreen());
-
-      // case signUp:
-      //   return _getPageRoute(SignupPage());
+        return _getPageRoute(const MainSplashScreen());
 
       case landing:
         return _getPageRoute(LandingPage());
 
       case bodyAuth:
-        return _getPageRoute(AuthPageViewer());
+        return _getPageRoute(const AuthPageViewer());
 
       case homeScreen:
         return _getPageRoute(HomeScreen());
