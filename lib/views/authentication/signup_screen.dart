@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
-import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
+import 'package:skitoboxes/constants/custom_snackbar.dart';
+import 'package:get/get.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -14,25 +15,30 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen>
     with AutomaticKeepAliveClientMixin<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? _userName, _userEmail, _userPassword;
   bool obSecure = true;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  String? _userPhone;
-  TextEditingController phoneController = TextEditingController();
 
-  void _trySubmit() {
+  void _trySubmit() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
     if (isValid) {
       _formKey.currentState!.save();
       // IF THE DATA IS VALIDATED, TAKE USER TO OTP SCREEN FOR CONFIRMATION
-      navigationController.sheetController.animateToPage(2, duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut);
+
+      authController.checkDuplicateEmail(authDataHandlingController.userEmail.value).then((value){
+        if(value.isEmpty){
+          navigationController.sheetController.animateToPage(2, duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut);
+        }else{
+          CustomSnackBar.showSnackBar(title: 'Email Already Exists', message: '', backgroundColor: snackBarError);
+        }
+      });
+
     }
   }
 
@@ -102,7 +108,7 @@ class _SignupScreenState extends State<SignupScreen>
                         return null;
                       },
                       onSaved: (value) {
-                        _userName = value;
+                        authDataHandlingController.userName.value = value!;
                       },
                       controller: nameController,
                       decoration: InputDecoration(
@@ -120,7 +126,7 @@ class _SignupScreenState extends State<SignupScreen>
                         return null;
                       },
                       onSaved: (value) {
-                        _userEmail = value;
+                        authDataHandlingController.userEmail.value  = value!;
                       },
                       decoration: InputDecoration(
                         labelText: 'Email',
@@ -128,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen>
                       ),
                     ),
                     TextFormField(
-                      textInputAction: TextInputAction.done,
+                      textInputAction: TextInputAction.next,
                       controller: passwordController,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -139,7 +145,7 @@ class _SignupScreenState extends State<SignupScreen>
                         return null;
                       },
                       onSaved: (value) {
-                        _userPassword = value;
+                        authDataHandlingController.userPassword.value  = value!;
                       },
                       obscureText: obSecure,
                       decoration: InputDecoration(
@@ -157,27 +163,6 @@ class _SignupScreenState extends State<SignupScreen>
                                     setState(() => obSecure = !obSecure),
                               ),
                         labelText: 'Password',
-                        labelStyle: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ),
-                    TextFormField(
-                      maxLength: 9,
-                      textInputAction: TextInputAction.done,
-                      controller: phoneController,
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter your phone number';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _userPhone = value;
-                      },
-                      decoration: InputDecoration(
-
-                        prefixText: '+ 92 - 3',
-                        labelText: 'Phone',
                         labelStyle: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),

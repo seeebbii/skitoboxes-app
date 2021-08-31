@@ -15,8 +15,6 @@ class _AuthPageViewerState extends State<AuthPageViewer> {
   int currentPage = 0;
 
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,4 +62,6 @@ class _AuthPageViewerState extends State<AuthPageViewer> {
       ),
     );
   }
+
+
 }

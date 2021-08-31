@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen>
       if(status == AuthResultStatus.successful){
         CustomSnackBar.showSnackBar(title: "Login Successful", message: '', backgroundColor: snackBarSuccess);
 
-        navigationController.navigateTo(homeScreen);
+        navigationController.getOffAll(homeScreen);
 
       }else{
         final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
@@ -192,6 +192,14 @@ class _LoginScreenState extends State<LoginScreen>
       ),
     );
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    authDataHandlingController.dispose();
+  }
+
 
   @override
   // TODO: implement wantKeepAlive

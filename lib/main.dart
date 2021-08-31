@@ -8,6 +8,8 @@ import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 import 'package:skitoboxes/router/route_generator.dart';
 import 'package:skitoboxes/theme/app_theme.dart';
 
+import 'controllers/authentication/auth_data_handling_controller.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -15,6 +17,7 @@ void main() async {
   // INITIALIZING IMPORTANT GET X CONTROLLERS
   Get.put(NavigationController());
   Get.put(AuthController());
+  Get.put(AuthDataHandlingController(),);
 
   runApp(const MyApp());
 }
