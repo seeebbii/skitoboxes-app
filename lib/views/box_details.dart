@@ -88,8 +88,11 @@ class _BoxDetailsState extends State<BoxDetails> {
                   width: 60,
                   height: 60,
                   child: LikeButton(
-                    onTap: onLikeButtonTapped,
-                  ),
+                      onTap: onLikeButtonTapped,
+                      likeBuilder: (bool isLiked) {
+                        return Icon(Icons.favorite,
+                            color: isLiked ? orange : Colors.grey);
+                      }),
                 ),
               ),
               ListTile(
