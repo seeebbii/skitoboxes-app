@@ -27,8 +27,8 @@ class ProductItem extends StatelessWidget {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 child: Hero(
                   tag: filterList![index].id!,
-                  child: Image.network(
-                    filterList![index].image!,
+                  child: Image.asset(
+                    'assets/images/box.png',
                     fit: BoxFit.fill,
                   ),
                 ),
