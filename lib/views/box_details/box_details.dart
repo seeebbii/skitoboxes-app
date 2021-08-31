@@ -22,6 +22,12 @@ class _BoxDetailsState extends State<BoxDetails> {
   }
 
   @override
+  void initState() {
+    setState(() {});
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

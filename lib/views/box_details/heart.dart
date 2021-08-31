@@ -26,6 +26,7 @@ class _HeartState extends State<Heart> with SingleTickerProviderStateMixin {
     super.initState();
     setState(() {
       isFav = productController.favoriteBoxes.contains(widget.addToFavorite);
+      print(isFav);
     });
     _controller = AnimationController(
       duration: Duration(milliseconds: 300),
