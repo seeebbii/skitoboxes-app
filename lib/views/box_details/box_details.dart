@@ -22,12 +22,6 @@ class _BoxDetailsState extends State<BoxDetails> {
   }
 
   @override
-  void initState() {
-    setState(() {});
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -45,29 +39,29 @@ class _BoxDetailsState extends State<BoxDetails> {
             children: <Widget>[
               ClipRRect(
                   child: Hero(
-                tag: widget.box!.id!,
-                child: Image.network(
-                  widget.box!.image!,
-                  height: 300,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
-                ),
-              )),
+                    tag: widget.box!.id!,
+                    child: Image.network(
+                      widget.box!.image!,
+                      height: 300,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                    ),
+                  )),
               SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               ListTile(
                 title: Text(
                   widget.box!.name!,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 subtitle: Text(
                   'Rs. ${widget.box!.price}',
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        letterSpacing: 1,
-                        color: Colors.grey.shade600,
-                      ),
+                    letterSpacing: 1,
+                    color: Colors.grey.shade600,
+                  ),
                 ),
                 trailing: Heart(addToFavorite: widget.box!),
               ),
@@ -75,37 +69,37 @@ class _BoxDetailsState extends State<BoxDetails> {
                 title: Text(
                   'What\'s Inside:',
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 subtitle: Text(
                   '${widget.box!.items!.join('\n')}',
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        letterSpacing: 1,
-                        color: Colors.grey.shade600,
-                      ),
+                    letterSpacing: 1,
+                    color: Colors.grey.shade600,
+                  ),
                 ),
               ),
               ListTile(
                 title: Text(
                   'Description',
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 subtitle: Text(
                   '${widget.box!.description}',
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        letterSpacing: 1,
-                        color: Colors.grey.shade600,
-                      ),
+                    letterSpacing: 1,
+                    color: Colors.grey.shade600,
+                  ),
                 ),
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: InkWell(
                   onTap: () {
                     _purchaseType(0);
@@ -119,9 +113,9 @@ class _BoxDetailsState extends State<BoxDetails> {
                       minLeadingWidth: 20,
                       leading: _selectedPurchaseType == 0
                           ? Icon(
-                              Icons.radio_button_checked,
-                              color: darkBlue,
-                            )
+                        Icons.radio_button_checked,
+                        color: darkBlue,
+                      )
                           : Icon(Icons.radio_button_unchecked),
                       title: Text(
                         'One-time Purchase',
@@ -141,7 +135,7 @@ class _BoxDetailsState extends State<BoxDetails> {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: InkWell(
                   onTap: () {
                     _purchaseType(1);
@@ -155,9 +149,9 @@ class _BoxDetailsState extends State<BoxDetails> {
                       minLeadingWidth: 20,
                       leading: _selectedPurchaseType == 1
                           ? Icon(
-                              Icons.radio_button_checked,
-                              color: darkBlue,
-                            )
+                        Icons.radio_button_checked,
+                        color: darkBlue,
+                      )
                           : Icon(Icons.radio_button_unchecked),
                       title: Text(
                         'Subscribe & Save 10%',
@@ -177,7 +171,7 @@ class _BoxDetailsState extends State<BoxDetails> {
               ),
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: ElevatedButton(
                   onPressed: () {},
                   child: Text(
