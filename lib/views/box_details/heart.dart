@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:skitoboxes/constants/colors.dart';
+import 'package:skitoboxes/controllers/product/product_controller.dart';
+import 'package:skitoboxes/models/box.dart';
 
 class Heart extends StatefulWidget {
+  Heart({Key? key, required this.addToFavorite}) : super(key: key);
+
+  Box? addToFavorite;
+
   @override
   _HeartState createState() => _HeartState();
 }
 
 class _HeartState extends State<Heart> with SingleTickerProviderStateMixin {
-  bool isFav = false;
+  bool? isFav;
+  ProductController productController = Get.find<ProductController>();
   AnimationController? _controller;
   Animation<Color>? _colorAnimation;
   Animation<double>? _sizeAnimation;
@@ -16,6 +24,9 @@ class _HeartState extends State<Heart> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      isFav = productController.favoriteBoxes.contains(widget.addToFavorite);
+    });
     _controller = AnimationController(
       duration: Duration(milliseconds: 300),
       vsync: this,
@@ -40,10 +51,14 @@ class _HeartState extends State<Heart> with SingleTickerProviderStateMixin {
     _controller!.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {
+          productController.favoriteBoxes.add(widget.addToFavorite!);
           isFav = true;
         });
       } else if (status == AnimationStatus.dismissed) {
-        isFav = false;
+        setState(() {
+          productController.favoriteBoxes.remove(widget.addToFavorite);
+          isFav = false;
+        });
       }
     });
   }
@@ -66,7 +81,7 @@ class _HeartState extends State<Heart> with SingleTickerProviderStateMixin {
             size: _sizeAnimation!.value,
           ),
           onPressed: () {
-            isFav ? _controller!.reverse() : _controller!.forward();
+            isFav! ? _controller!.reverse() : _controller!.forward();
           },
         );
       },

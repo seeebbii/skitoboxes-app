@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/models/box.dart';
-
 import 'heart.dart';
 
 class BoxDetails extends StatefulWidget {
@@ -64,7 +63,7 @@ class _BoxDetailsState extends State<BoxDetails> {
                         color: Colors.grey.shade600,
                       ),
                 ),
-                trailing: Heart(),
+                trailing: Heart(addToFavorite: widget.box!),
               ),
               ListTile(
                 title: Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skitoboxes/models/box.dart';
 import 'package:skitoboxes/views/bottom_navbar/dashboard_pageview/dashboard_body.dart';
 import 'package:skitoboxes/views/bottom_navbar/dashboard_pageview/dashboard_screen.dart';
 import 'package:skitoboxes/views/bottom_navbar/profile_screen.dart';
@@ -30,9 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        children: bottomScreens,
-        index: _selectedScreen,
+      body: Center(
+        child: bottomScreens.elementAt(_selectedScreen),
       ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,

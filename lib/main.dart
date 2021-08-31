@@ -1,13 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/authentication/auth_controller.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
 import 'package:skitoboxes/router/route_generator.dart';
 import 'package:skitoboxes/theme/app_theme.dart';
-
 import 'controllers/authentication/auth_data_handling_controller.dart';
 
 void main() async {
@@ -17,7 +15,9 @@ void main() async {
   // INITIALIZING IMPORTANT GET X CONTROLLERS
   Get.put(NavigationController());
   Get.put(AuthController());
-  Get.put(AuthDataHandlingController(),);
+  Get.put(
+    AuthDataHandlingController(),
+  );
 
   runApp(const MyApp());
 }

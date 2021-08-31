@@ -46,7 +46,6 @@ class _OtpScreenState extends State<OtpScreen>
         });
   }
 
-
   void _trySubmit() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
@@ -112,24 +111,24 @@ class _OtpScreenState extends State<OtpScreen>
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter your phone number';
-                        }else if(value.length != 9){
+                        } else if (value.length != 9) {
                           return 'Invalid phone number';
                         }
                         return null;
                       },
                       onSaved: (value) {
-                        authDataHandlingController.userPhone.value  = value!;
+                        authDataHandlingController.userPhone.value = value!;
                       },
                       decoration: InputDecoration(
                         prefixText: '+ 92 - 3',
                         labelText: 'Phone',
                         labelStyle: Theme.of(context).textTheme.bodyText1,
                       ),
-                    ),],
+                    ),
+                  ],
                 ),
               ),
             ),
-
             SizedBox(height: MediaQuery.of(context).size.width * 0.07),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -146,9 +145,9 @@ class _OtpScreenState extends State<OtpScreen>
                       Icons.arrow_forward_ios,
                       color: Colors.white,
                     ),
-                    backgroundColor:Theme.of(context)
+                    backgroundColor: Theme.of(context)
                         .floatingActionButtonTheme
-                        .backgroundColor ,
+                        .backgroundColor,
                     elevation:
                         Theme.of(context).floatingActionButtonTheme.elevation,
                   ),
@@ -168,14 +167,15 @@ class _OtpScreenState extends State<OtpScreen>
 }
 
 class OtpBottomSheet extends StatefulWidget {
-  OtpBottomSheet({Key? key,}) : super(key: key);
+  OtpBottomSheet({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _OtpBottomSheetState createState() => _OtpBottomSheetState();
 }
 
 class _OtpBottomSheetState extends State<OtpBottomSheet> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -183,8 +183,7 @@ class _OtpBottomSheetState extends State<OtpBottomSheet> {
     trySubmit();
   }
 
-
-  void trySubmit()async{
+  void trySubmit() async {
     // CONFIRM OTP AND THEN Create user on auth request
     // PHONE OTP AUTHENTICATION
     await FirebaseAuth.instance.verifyPhoneNumber(
@@ -192,15 +191,16 @@ class _OtpBottomSheetState extends State<OtpBottomSheet> {
       timeout: const Duration(seconds: 60),
       verificationCompleted: (PhoneAuthCredential credential) async {
         UserCredential result =
-        await FirebaseAuth.instance.signInWithCredential(credential);
+            await FirebaseAuth.instance.signInWithCredential(credential);
         if (result.user != null) {
           print('CODE SUCCESSFUL');
 
           final status = await authController.createUser(
-              authDataHandlingController.userEmail.value,
-              authDataHandlingController.userPassword.value,
-              authDataHandlingController.userName.value,
-            authDataHandlingController.userPhone.value,);
+            authDataHandlingController.userEmail.value,
+            authDataHandlingController.userPassword.value,
+            authDataHandlingController.userName.value,
+            authDataHandlingController.userPhone.value,
+          );
           if (status == AuthResultStatus.successful) {
             CustomSnackBar.showSnackBar(
                 title: "Account created Successfully",
@@ -208,7 +208,7 @@ class _OtpBottomSheetState extends State<OtpBottomSheet> {
                 backgroundColor: snackBarSuccess);
           } else {
             final errorMsg =
-            AuthExceptionHandler.generateExceptionMessage(status);
+                AuthExceptionHandler.generateExceptionMessage(status);
             CustomSnackBar.showSnackBar(
                 title: errorMsg, message: '', backgroundColor: snackBarError);
           }
@@ -223,9 +223,11 @@ class _OtpBottomSheetState extends State<OtpBottomSheet> {
         }
       },
       codeSent: (String verificationId, int? resendToken) async {
-        PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: myCode!);
-        UserCredential result = await FirebaseAuth.instance.signInWithCredential(credential);
-        if(result.user != null){
+        PhoneAuthCredential credential = PhoneAuthProvider.credential(
+            verificationId: verificationId, smsCode: myCode!);
+        UserCredential result =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+        if (result.user != null) {
           print('CODE SUCCESSFUL');
         }
       },
@@ -241,119 +243,116 @@ class _OtpBottomSheetState extends State<OtpBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Column(
-              children: [
-                Container(
-                  height: 60,
-                  width: 60,
-                  child: const RiveAnimation.asset(
-                    'assets/animation/logo_orange.riv',
-                  ),
+        body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Column(
+            children: [
+              Container(
+                height: 60,
+                width: 60,
+                child: const RiveAnimation.asset(
+                  'assets/animation/logo_orange.riv',
                 ),
-                Container(
-                  child: Text(
-                    'SKITO',
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .headline5!
-                        .copyWith(fontSize: 24, color: orange),
+              ),
+              Container(
+                child: Text(
+                  'SKITO',
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .headline5!
+                      .copyWith(fontSize: 24, color: orange),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 60),
+            child: Column(
+              children: [
+                Text(
+                  'Please confirm your profile',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontSize: 22),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                Text(
+                  'The code has been sent to +92 3${authDataHandlingController.userPhone}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: Colors.grey.shade600),
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.07),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: OTPTextField(
+              length: 6,
+              width: MediaQuery.of(context).size.width,
+              fieldWidth: 50,
+              style: const TextStyle(fontSize: 17),
+              textFieldAlignment: MainAxisAlignment.spaceEvenly,
+              fieldStyle: FieldStyle.underline,
+              onChanged: (val) {
+                debugPrint(val);
+                myCode = val;
+                if (val.length != 6) {
+                  setState(() {
+                    verificationAllowed = false;
+                  });
+                }
+              },
+              onCompleted: (pin) {
+                myCode = pin;
+                if (pin.length == 6) {
+                  setState(() {
+                    verificationAllowed = true;
+                  });
+                }
+              },
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.07),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'SIGN UP',
+                  style: Theme.of(context).primaryTextTheme.headline5,
+                ),
+                FloatingActionButton(
+                  onPressed: verificationAllowed
+                      ? () {
+                          // CHECK CODE
+                        }
+                      : null,
+                  child: const Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
                   ),
+                  backgroundColor: verificationAllowed
+                      ? Theme.of(context)
+                          .floatingActionButtonTheme
+                          .backgroundColor
+                      : Colors.grey,
+                  elevation:
+                      Theme.of(context).floatingActionButtonTheme.elevation,
                 ),
               ],
             ),
-            SizedBox(height: MediaQuery.of(context).size.width * 0.05),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 60),
-              child: Column(
-                children: [
-                  Text(
-                    'Please confirm your profile',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontSize: 22),
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.width * 0.02),
-                  Text(
-                    'The code has been sent to +92 3${authDataHandlingController.userPhone}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: Colors.grey.shade600),
-                    textAlign: TextAlign.center,
-                  )
-                ],
-              ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.width * 0.07),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: OTPTextField(
-                length: 6,
-                width: MediaQuery.of(context).size.width,
-                fieldWidth: 50,
-                style: const TextStyle(fontSize: 17),
-                textFieldAlignment: MainAxisAlignment.spaceEvenly,
-                fieldStyle: FieldStyle.underline,
-                onChanged: (val) {
-                  debugPrint(val);
-                  myCode = val;
-                  if(val.length != 6){
-                    setState(() {
-                      verificationAllowed = false;
-                    });
-                  }
-                },
-                onCompleted: (pin) {
-                  myCode = pin;
-                  if(pin.length == 6){
-                    setState(() {
-                      verificationAllowed = true;
-                    });
-                  }
-                },
-              ),
-            ),
-
-            SizedBox(height: MediaQuery.of(context).size.width * 0.07),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'SIGN UP',
-                    style: Theme.of(context).primaryTextTheme.headline5,
-                  ),
-                  FloatingActionButton(
-                    onPressed: verificationAllowed ? (){
-                      // CHECK CODE
-
-                    }
-                        : null,
-                    child: const Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.white,
-                    ),
-                    backgroundColor: verificationAllowed ? Theme.of(context)
-                        .floatingActionButtonTheme
-                        .backgroundColor : Colors.grey,
-                    elevation:
-                    Theme.of(context).floatingActionButtonTheme.elevation,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-          ],
-        ),
-      )
-    );
+          ),
+          SizedBox(height: MediaQuery.of(context).size.width * 0.1),
+        ],
+      ),
+    ));
   }
 }
-
-
-
