@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:skitoboxes/home_screen.dart';
 import 'package:skitoboxes/models/box.dart';
 import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
-import 'package:skitoboxes/views/box_details/box_details.dart';
+import 'package:skitoboxes/views/box_details.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
 import 'package:skitoboxes/views/splash/main_splash_screen.dart';
 

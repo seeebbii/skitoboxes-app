@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:skitoboxes/constants/colors.dart';
+import 'package:skitoboxes/controllers/product/product_controller.dart';
 import 'package:skitoboxes/models/box.dart';
-import 'heart.dart';
+import 'package:like_button/like_button.dart';
 
 class BoxDetails extends StatefulWidget {
   BoxDetails({Key? key, @required this.box}) : super(key: key);
@@ -13,12 +15,32 @@ class BoxDetails extends StatefulWidget {
 }
 
 class _BoxDetailsState extends State<BoxDetails> {
+  ProductController _profileController = Get.put(ProductController());
+  bool? isFav;
   int? _selectedPurchaseType;
 
   void _purchaseType(value) {
     setState(() {
       _selectedPurchaseType = value;
     });
+  }
+
+  Future<bool> onLikeButtonTapped(bool isLiked) async {
+    if (!isLiked) {
+      _profileController.favoriteBoxes.add(widget.box!);
+    } else {
+      _profileController.favoriteBoxes.remove(widget.box!);
+    }
+
+    return !isLiked;
+  }
+
+  @override
+  void initState() {
+    setState(() {
+      isFav = _profileController.favoriteBoxes.contains(widget.box!);
+    });
+    super.initState();
   }
 
   @override
@@ -35,7 +57,6 @@ class _BoxDetailsState extends State<BoxDetails> {
       body: SingleChildScrollView(
         child: Container(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               ClipRRect(
                   child: Hero(
@@ -63,7 +84,13 @@ class _BoxDetailsState extends State<BoxDetails> {
                         color: Colors.grey.shade600,
                       ),
                 ),
-                trailing: Heart(addToFavorite: widget.box!),
+                trailing: Container(
+                  width: 60,
+                  height: 60,
+                  child: LikeButton(
+                    onTap: onLikeButtonTapped,
+                  ),
+                ),
               ),
               ListTile(
                 title: Text(
