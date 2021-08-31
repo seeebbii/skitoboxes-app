@@ -2,14 +2,15 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:skitoboxes/constants/controllers.dart';
+import 'package:skitoboxes/models/box.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen(
       {Key? key, @required this.categoryType, @required this.onDataChange})
       : super(key: key);
 
-  String? categoryType;
-  final Function(String)? onDataChange;
+  Category? categoryType;
+  final Function(Category)? onDataChange;
 
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
@@ -17,91 +18,94 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   List<int> carouselImgList = [1, 2, 3, 4];
-  List<String> allCategoriesList = [
-    'Sncacks',
-    'Beauty',
-    'Books',
-    'Health',
-    'Selfcare',
-    'Fashion',
-    'Stationery'
+  List<Category> allCategoriesList = [
+    Category.Beauty,
+    Category.Fashion,
+    Category.Snacks,
+    Category.Health,
+    Category.Stationery,
+    Category.SelfCare,
+    Category.Books,
   ];
+
   var _currentCarouselIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Center(
-                  child: CarouselSlider(
-                options: CarouselOptions(
-                    initialPage: 0,
-                    autoPlayInterval: Duration(seconds: 3),
-                    autoPlayAnimationDuration: Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _currentCarouselIndex = index;
-                      });
-                    }),
-                items: carouselImgList.map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                            child: Text(
-                              'Image $i',
-                              style: TextStyle(fontSize: 16.0),
-                            ),
-                          ));
-                    },
+    return SingleChildScrollView(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: Center(
+                    child: CarouselSlider(
+                  options: CarouselOptions(
+                      initialPage: 0,
+                      autoPlayInterval: Duration(seconds: 3),
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _currentCarouselIndex = index;
+                        });
+                      }),
+                  items: carouselImgList.map((i) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(
+                              child: Text(
+                                'Image $i',
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                            ));
+                      },
+                    );
+                  }).toList(),
+                )),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: carouselImgList.map(
+                (image) {
+                  int index = carouselImgList.indexOf(image);
+                  return Container(
+                    width: 10,
+                    height: 10,
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _currentCarouselIndex == index
+                            ? Theme.of(context).accentColor
+                            : Theme.of(context).accentColor.withOpacity(0.3)),
                   );
-                }).toList(),
-              )),
+                },
+              ).toList(),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: carouselImgList.map(
-              (image) {
-                int index = carouselImgList.indexOf(image);
-                return Container(
-                  width: 10,
-                  height: 10,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _currentCarouselIndex == index
-                          ? Theme.of(context).accentColor
-                          : Theme.of(context).accentColor.withOpacity(0.3)),
-                );
-              },
-            ).toList(),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              'Skito Category',
-              style: Theme.of(context)
-                  .primaryTextTheme
-                  .headline5!
-                  .copyWith(fontFamily: 'Avenir'),
+            Container(
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                'Skito Category',
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .headline5!
+                    .copyWith(fontFamily: 'Avenir'),
+              ),
             ),
-          ),
-          Expanded(
-            child: StaggeredGridView.countBuilder(
+            StaggeredGridView.countBuilder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
               crossAxisCount: 4,
               itemCount: allCategoriesList.length,
               itemBuilder: (BuildContext context, int index) => InkWell(
@@ -116,17 +120,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Container(
                       color: Theme.of(context).primaryColor,
                       child: Center(
-                        child: Text('${allCategoriesList[index]}'),
+                        child: Text(
+                            '${allCategoriesList[index].toString().split('.').last}'),
                       )),
                 ),
               ),
               staggeredTileBuilder: (int index) =>
-                  StaggeredTile.count(2, index.isEven ? 3 : 2),
+                  StaggeredTile.count(2, index.isEven ? 2 : 1),
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

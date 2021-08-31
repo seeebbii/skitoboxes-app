@@ -16,7 +16,6 @@ class AuthController extends GetxController {
   final firebaseUser = FirebaseAuth.instance.currentUser.obs;
   var currentUser = AuthModel().obs;
 
-
   AuthResultStatus? _status;
 
   @override
@@ -27,32 +26,30 @@ class AuthController extends GetxController {
   }
 
   //  CREATE USER WITH EMAIL AND PASSWORD
-  Future<AuthResultStatus> createUser(String email, String password, String userName, int userAge, int userPhone) async {
+  Future<AuthResultStatus> createUser(String email, String password,
+      String userName, int userAge, int userPhone) async {
     try {
       UserCredential _authResult = await _auth.createUserWithEmailAndPassword(
           email: email.trim(), password: password);
 
-      if(_authResult.user != null){
+      if (_authResult.user != null) {
         _status = AuthResultStatus.successful;
         AuthModel _user = AuthModel(
             uid: _authResult.user!.uid,
             name: userName,
             email: email.trim(),
-            phoneNumber: userPhone
-        );
+            phoneNumber: userPhone);
         currentUser.value = _user;
         navigationController.goBack();
-      }else{
+      } else {
         _status = AuthResultStatus.undefined;
       }
-
     } catch (e) {
       debugPrint(e.toString());
       _status = AuthExceptionHandler.handleException(e);
     }
     return _status!;
   }
-
 
   // Login with email and password
   Future<AuthResultStatus> loginUser(String email, String password) async {
@@ -73,12 +70,9 @@ class AuthController extends GetxController {
 
         // TODO :: LOAD USER INFO FROM MONGO DB COLLECTION
         navigationController.getOffAll(homeScreen);
-
-
       } else {
         _status = AuthResultStatus.undefined;
       }
-
     } catch (e) {
       debugPrint(e.toString());
       _status = AuthExceptionHandler.handleException(e);
@@ -92,8 +86,8 @@ class AuthController extends GetxController {
       await _auth.signOut();
       navigationController.getOffAll(landing);
     } catch (e) {
-      CustomSnackBar.showSnackBar(title: e.toString(), message: '', backgroundColor: snackBarError);
+      CustomSnackBar.showSnackBar(
+          title: e.toString(), message: '', backgroundColor: snackBarError);
     }
   }
-
 }

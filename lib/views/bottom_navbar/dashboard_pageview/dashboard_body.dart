@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:skitoboxes/constants/controllers.dart';
+import 'package:skitoboxes/models/box.dart';
 import 'package:skitoboxes/views/bottom_navbar/dashboard_pageview/category_screen.dart';
 import 'package:skitoboxes/views/bottom_navbar/dashboard_pageview/dashboard_screen.dart';
 import 'package:skitoboxes/widgets/custom_drawer.dart';
@@ -15,8 +16,8 @@ class DashboardBody extends StatefulWidget {
 
 class _DashboardBodyState extends State<DashboardBody> {
   int _currentPageIndex = 0;
-  String? categoryType;
-  void onDataChange(String newData) {
+  Category? categoryType;
+  void onDataChange(Category newData) {
     setState(() => categoryType = newData);
   }
 
@@ -45,7 +46,9 @@ class _DashboardBodyState extends State<DashboardBody> {
                           curve: Curves.fastOutSlowIn);
                     },
                     icon: Icon(Icons.arrow_back)),
-            title: _currentPageIndex == 0 ? Text('') : Text(categoryType!),
+            title: _currentPageIndex == 0
+                ? Text('')
+                : Text(categoryType.toString().split('.').last),
             actions: [
               IconButton(
                 icon: Icon(Icons.search_outlined),
