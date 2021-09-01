@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "646099392997-v7ulrqup3k7nvqiq6hqglh3s7fopglu4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.haz.skitoboxes",
+            "certificate_hash": "8ee94d8d45d0792885c83415799c0dc96756d3e3"
+          }
+        },
+        {
           "client_id": "646099392997-gf865lhvebiupgc1vusar4o3g8cqgn1j.apps.googleusercontent.com",
           "client_type": 3
         }
