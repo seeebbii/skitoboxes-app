@@ -28,7 +28,12 @@ class AuthController extends GetxController {
 
   // CHECKING DUPLICATE EMAIL
   Future<List<String>> checkDuplicateEmail(String email) async {
-    return await _auth.fetchSignInMethodsForEmail(email);
+    try{
+      return await _auth.fetchSignInMethodsForEmail(email);
+    } on FirebaseAuthException catch(e){
+      rethrow;
+    }
+
   }
 
 
