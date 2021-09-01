@@ -3,7 +3,7 @@ import 'package:skitoboxes/models/box.dart';
 import 'package:skitoboxes/views/bottom_navbar/dashboard_pageview/dashboard_body.dart';
 import 'package:skitoboxes/views/bottom_navbar/dashboard_pageview/dashboard_screen.dart';
 import 'package:skitoboxes/views/bottom_navbar/profile_screen.dart';
-import 'package:skitoboxes/views/bottom_navbar/subscription_screen.dart';
+import 'package:skitoboxes/views/profile_settings/subscription_screen.dart';
 import 'package:skitoboxes/views/bottom_navbar/wishlist_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> bottomScreens = [
     DashboardBody(),
     WishlistScreen(),
-    SubscriptionScreen(),
     ProfileScreen(),
   ];
 
@@ -47,12 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_outline),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.subscriptions_outlined,
-            ),
             label: '',
           ),
           BottomNavigationBarItem(
