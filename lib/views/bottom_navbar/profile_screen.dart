@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/constants/colors.dart';
+import 'package:skitoboxes/constants/controllers.dart';
+import 'package:skitoboxes/router/route_generator.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -9,13 +11,13 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  List<RadioCardModel>? cardData = [
-    RadioCardModel(false, Icons.subscriptions_outlined, 'Subscriptions'),
-    RadioCardModel(false, Icons.delivery_dining_outlined, 'Orders'),
-    RadioCardModel(false, Icons.favorite_outline, 'Wishlist'),
-    RadioCardModel(false, Icons.notifications_active_outlined, 'Notifications'),
-    RadioCardModel(false, Icons.settings_outlined, 'Settings'),
-    RadioCardModel(false, Icons.logout_outlined, 'Sign Out'),
+  final List<RadioCardModel> cardData = [
+    RadioCardModel(false, Icons.subscriptions_outlined, 'Subscriptions', subscriptionScreen),
+    RadioCardModel(false, Icons.delivery_dining_outlined, 'Orders', ''),
+    RadioCardModel(false, Icons.favorite_outline, 'Wishlist', ''),
+    RadioCardModel(false, Icons.notifications_active_outlined, 'Notifications', ''),
+    RadioCardModel(false, Icons.settings_outlined, 'Settings', ''),
+    RadioCardModel(false, Icons.logout_outlined, 'Sign Out', ''),
   ];
 
   @override
@@ -90,19 +92,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           Expanded(
             child: ListView.builder(
-              itemCount: cardData!.length,
+              itemCount: cardData.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   highlightColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
+                    navigationController.navigateTo(cardData[index].navigationRoute);
                     setState(() {
-                      cardData!
-                          .forEach((element) => element.isSelected = false);
-                      cardData?[index].isSelected = true;
+                      cardData.forEach((element) => element.isSelected = false);
+                      cardData[index].isSelected = true;
                     });
                   },
-                  child: RadioItem(cardData![index]),
+                  child: RadioItem(cardData[index]),
                 );
               },
             ),
@@ -148,6 +150,7 @@ class RadioCardModel {
   bool isSelected;
   final IconData icon;
   final String title;
+  final String navigationRoute;
 
-  RadioCardModel(this.isSelected, this.icon, this.title);
+  RadioCardModel(this.isSelected, this.icon, this.title, this.navigationRoute);
 }

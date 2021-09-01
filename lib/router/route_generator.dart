@@ -5,6 +5,7 @@ import 'package:skitoboxes/models/box.dart';
 import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
 import 'package:skitoboxes/views/box_details.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
+import 'package:skitoboxes/views/profile_settings/subscription_screen.dart';
 import 'package:skitoboxes/views/purchase/cart_screen.dart';
 import 'package:skitoboxes/views/splash/main_splash_screen.dart';
 
@@ -15,6 +16,7 @@ const String bodyAuth = '/bodyAuth';
 const String homeScreen = '/home-screen';
 const String boxDetails = '/box-details';
 const String cart = '/cart';
+const String subscriptionScreen = '/subscription-screen';
 
 // ignore: todo
 // TODO : ROUTES GENERATOR CLASS THAT CONTROLS THE FLOW OF NAVIGATION/ROUTING
@@ -41,6 +43,9 @@ class RouteGenerator {
 
       case cart:
         return _getPageRoute(CartScreen());
+
+      case subscriptionScreen:
+        return _getPageRoute(const SubscriptionScreen());
 
       default:
         return _errorRoute();

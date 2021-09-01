@@ -5,9 +5,11 @@ class SubscriptionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Text('Subscription'),
+    return Scaffold(
+      body: Center(
+        child: Container(
+          child: Text('Subscription'),
+        ),
       ),
     );
   }
