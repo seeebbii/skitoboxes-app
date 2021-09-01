@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
 import 'package:skitoboxes/constants/colors.dart';
+import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/product/product_controller.dart';
 import 'package:skitoboxes/models/box.dart';
-
+import 'package:skitoboxes/router/route_generator.dart';
+import 'package:badges/badges.dart';
 
 class BoxDetails extends StatefulWidget {
   BoxDetails({Key? key, @required this.box}) : super(key: key);
@@ -16,9 +18,10 @@ class BoxDetails extends StatefulWidget {
 }
 
 class _BoxDetailsState extends State<BoxDetails> {
-  ProductController _profileController = Get.put(ProductController());
+  ProductController _productController = Get.put(ProductController());
   bool? isFav;
   int? _selectedPurchaseType;
+  bool? addedToCart;
 
   void _purchaseType(value) {
     setState(() {
@@ -28,21 +31,36 @@ class _BoxDetailsState extends State<BoxDetails> {
 
   Future<bool> onLikeButtonTapped(bool isLiked) async {
     if (isFav == false) {
-      _profileController.favoriteBoxes.add(widget.box!);
+      _productController.favoriteBoxes.add(widget.box!);
     } else {
       setState(() {
         isFav = false;
       });
-      _profileController.favoriteBoxes.remove(widget.box!);
+      _productController.favoriteBoxes.remove(widget.box!);
     }
 
     return !isLiked;
   }
 
+  void onAddToCard() {
+    if (addedToCart == false) {
+      _productController.inCart.add(widget.box!);
+      setState(() {
+        addedToCart = true;
+      });
+    } else {
+      setState(() {
+        addedToCart = false;
+      });
+      _productController.inCart.remove(widget.box!);
+    }
+  }
+
   @override
   void initState() {
     setState(() {
-      isFav = _profileController.favoriteBoxes.contains(widget.box!);
+      isFav = _productController.favoriteBoxes.contains(widget.box!);
+      addedToCart = _productController.inCart.contains(widget.box!);
     });
     super.initState();
   }
@@ -56,6 +74,24 @@ class _BoxDetailsState extends State<BoxDetails> {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          Badge(
+            badgeColor: Colors.white,
+            position: BadgePosition.topEnd(top: 5, end: 5),
+            animationType: BadgeAnimationType.scale,
+            badgeContent: Text(_productController.inCart.length.toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(color: Colors.black54, fontSize: 12)),
+            child: IconButton(
+              icon: Icon(Icons.card_travel_outlined),
+              onPressed: () {
+                navigationController.navigateTo(cart);
+              },
+            ),
+          )
+        ],
       ),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
@@ -94,9 +130,8 @@ class _BoxDetailsState extends State<BoxDetails> {
                   child: LikeButton(
                       onTap: onLikeButtonTapped,
                       likeBuilder: (bool isLiked) {
-                        if(isFav != false){
-                          return Icon(Icons.favorite,
-                              color: orange );
+                        if (isFav != false) {
+                          return Icon(Icons.favorite, color: orange);
                         }
                         return Icon(Icons.favorite,
                             color: isLiked ? orange : Colors.grey);
@@ -211,14 +246,12 @@ class _BoxDetailsState extends State<BoxDetails> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Place Order',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
+                  onPressed: _selectedPurchaseType != null ? onAddToCard : null,
+                  child: _selectedPurchaseType == 0
+                      ? addedToCart == false
+                          ? purchaseTypeButton(context, 'Add To Cart')
+                          : purchaseTypeButton(context, 'Remove From Cart')
+                      : purchaseTypeButton(context, 'Place Order'),
                   style: ElevatedButton.styleFrom(
                     primary: darkBlue,
                     elevation: 0,
@@ -233,6 +266,14 @@ class _BoxDetailsState extends State<BoxDetails> {
           ),
         ),
       ),
+    );
+  }
+
+  Text purchaseTypeButton(BuildContext context, String? text) {
+    return Text(
+      text!,
+      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
     );
   }
 }

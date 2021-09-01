@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:skitoboxes/models/box.dart';
 
 class ProductController extends GetxController {
+  var inCart = <Box>[].obs;
   var favoriteBoxes = <Box>[].obs;
   List<Box> boxesList = [
     Box(
@@ -118,7 +119,7 @@ class ProductController extends GetxController {
     ),
     Box(
       id: 8,
-      name: 'Short Story Box ',
+      name: 'Short Story Box',
       image:
           'https://specials-images.forbesimg.com/imageserve/605b86dfdb1f21935c430522/Angled-view-of-orange-Bokksu-subscription-box-surrounded-by-various-snacks-/960x0.jpg?fit=scale',
       price: 4000,

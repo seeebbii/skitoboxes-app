@@ -1,6 +1,9 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/product/product_controller.dart';
+import 'package:skitoboxes/router/route_generator.dart';
 import 'package:skitoboxes/widgets/custom_drawer.dart';
 import 'package:skitoboxes/widgets/product_item.dart';
 
@@ -30,9 +33,23 @@ class WishlistScreen extends StatelessWidget {
                 icon: Icon(Icons.search_outlined),
                 onPressed: () {},
               ),
-              IconButton(
-                icon: Icon(Icons.card_travel_outlined),
-                onPressed: () {},
+              Obx(
+                () => Badge(
+                  badgeColor: Colors.black,
+                  position: BadgePosition.topEnd(top: 5, end: 5),
+                  animationType: BadgeAnimationType.scale,
+                  badgeContent: Text(productController.inCart.length.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: Colors.white, fontSize: 12)),
+                  child: IconButton(
+                    icon: Icon(Icons.card_travel_outlined),
+                    onPressed: () {
+                      navigationController.navigateTo(cart);
+                    },
+                  ),
+                ),
               )
             ]),
         body: Obx(() => productController.favoriteBoxes.isEmpty
