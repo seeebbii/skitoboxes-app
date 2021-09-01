@@ -44,19 +44,10 @@ class _OtpScreenState extends State<OtpScreen> {
 
   void signInWithPhoneAuthCredential(
       PhoneAuthCredential phoneAuthCredential) async {
-    try {} finally {
-      setState(() {
-        showLoading = true;
-      });
-    }
 
     try {
       final authCredential =
           await _auth.signInWithCredential(phoneAuthCredential);
-
-      setState(() {
-        showLoading = false;
-      });
 
       if (authCredential.user != null) {
         final status = await authController.createUser(
@@ -66,11 +57,13 @@ class _OtpScreenState extends State<OtpScreen> {
           authDataHandlingController.userPhone.value,
         );
         if (status == AuthResultStatus.successful) {
+          navigationController.getOffAll(homeScreen);
+
           CustomSnackBar.showSnackBar(
               title: "Account created Successfully",
               message: '',
               backgroundColor: snackBarSuccess);
-          navigationController.getOffAll(homeScreen);
+
         } else {
           final errorMsg =
               AuthExceptionHandler.generateExceptionMessage(status);
@@ -79,10 +72,6 @@ class _OtpScreenState extends State<OtpScreen> {
         }
       }
     } on FirebaseAuthException catch (e) {
-      setState(() {
-        showLoading = false;
-      });
-
       CustomSnackBar.showSnackBar(
           title: e.toString(), message: '', backgroundColor: snackBarError);
     }
@@ -148,6 +137,9 @@ class _OtpScreenState extends State<OtpScreen> {
                         }
                         return null;
                       },
+                      onChanged: (value){
+                        authDataHandlingController.userPhone.value = value;
+                      },
                       decoration: InputDecoration(
                         prefixText: '+ 92 - 3',
                         labelText: 'Phone',
@@ -170,47 +162,34 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                   FloatingActionButton(
                     onPressed: () async {
-                      setState(() {
-                        showLoading = true;
-                      });
 
                       final isValid = _formKey.currentState!.validate();
                       FocusScope.of(context).unfocus();
 
                       if (isValid) {
+
+                        otpSheet(context);
+
                         _formKey.currentState!.save();
                         await _auth.verifyPhoneNumber(
                           phoneNumber: '+923${phoneController.text}',
                           verificationCompleted: (phoneAuthCredential) async {
-                            setState(() {
-                              showLoading = false;
-                            });
+
                             //signInWithPhoneAuthCredential(phoneAuthCredential);
                           },
                           verificationFailed: (verificationFailed) async {
-                            setState(() {
-                              showLoading = false;
-                            });
                             CustomSnackBar.showSnackBar(
                                 title: verificationFailed.message.toString(),
                                 message: '',
                                 backgroundColor: snackBarError);
-                            ;
                           },
-                          codeSent: (verificationId, resendingToken) async {
+                          codeSent: (codeRec, resendingToken) async {
                             setState(() {
-                              showLoading = false;
-                              currentState = PhoneVerificationPageState
-                                  .SHOW_OTP_FORM_STATE;
-                              this.verificationId = verificationId;
+                              verificationId = codeRec;
                             });
                           },
                           codeAutoRetrievalTimeout: (verificationId) async {},
                         );
-                      } else {
-                        setState(() {
-                          showLoading = false;
-                        });
                       }
                     },
                     child: const Icon(
@@ -306,9 +285,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           style: const TextStyle(fontSize: 17),
                           textFieldAlignment: MainAxisAlignment.spaceEvenly,
                           fieldStyle: FieldStyle.underline,
-                          onChanged: (pin) {
-                            print("Changed: " + pin);
-                          },
+                          onChanged: (pin) {},
                           onCompleted: (pin) async {
                             PhoneAuthCredential phoneAuthCredential =
                                 PhoneAuthProvider.credential(
@@ -350,15 +327,7 @@ class _OtpScreenState extends State<OtpScreen> {
       child: Scaffold(
           key: _scaffoldKey,
           body: Container(
-            child: showLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : currentState ==
-                        PhoneVerificationPageState.SHOW_MOBILE_FORM_STATE
-                    ? getMobileFormWidget(context)
-                    : otpSheet(context),
-            padding: const EdgeInsets.all(16),
+            child: getMobileFormWidget(context)
           )),
     );
   }
