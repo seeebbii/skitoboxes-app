@@ -16,14 +16,25 @@ class WishlistScreen extends StatelessWidget {
       child: Scaffold(
         drawer: CustomDrawer(),
         appBar: AppBar(
-          title: Text('Wishlist'),
-          automaticallyImplyLeading: false,
-          leading: Builder(
-            builder: (context) => IconButton(
-                icon: Icon(Icons.border_all_rounded),
-                onPressed: () => Scaffold.of(context).openDrawer()),
-          ),
-        ),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            title: Text('Wishlist'),
+            automaticallyImplyLeading: false,
+            leading: Builder(
+              builder: (context) => IconButton(
+                  icon: Icon(Icons.border_all_rounded),
+                  onPressed: () => Scaffold.of(context).openDrawer()),
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.search_outlined),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.card_travel_outlined),
+                onPressed: () {},
+              )
+            ]),
         body: Obx(() => productController.favoriteBoxes.isEmpty
             ? Center(child: Text('No items in wishlist'))
             : ProductItem(filterList: productController.favoriteBoxes)),

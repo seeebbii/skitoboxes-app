@@ -47,7 +47,7 @@ class _DashboardBodyState extends State<DashboardBody> {
                     },
                     icon: Icon(Icons.arrow_back)),
             title: _currentPageIndex == 0
-                ? Text('')
+                ? Text('Dashboard')
                 : Text(categoryType.toString().split('.').last),
             actions: [
               IconButton(

@@ -18,7 +18,6 @@ class _LoginScreenState extends State<LoginScreen>
   String? _userEmail, _userPassword;
   bool obSecure = true;
 
-
   void _trySubmit() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
@@ -27,15 +26,19 @@ class _LoginScreenState extends State<LoginScreen>
       _formKey.currentState!.save();
 
       //Login user on auth request
-      final status = await authController.loginUser(_userEmail!, _userPassword!);
-      if(status == AuthResultStatus.successful){
-        CustomSnackBar.showSnackBar(title: "Login Successful", message: '', backgroundColor: snackBarSuccess);
+      final status =
+          await authController.loginUser(_userEmail!, _userPassword!);
+      if (status == AuthResultStatus.successful) {
+        CustomSnackBar.showSnackBar(
+            title: "Login Successful",
+            message: '',
+            backgroundColor: snackBarSuccess);
 
         navigationController.getOffAll(homeScreen);
-
-      }else{
+      } else {
         final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
-        CustomSnackBar.showSnackBar(title: errorMsg, message: '', backgroundColor: snackBarError);
+        CustomSnackBar.showSnackBar(
+            title: errorMsg, message: '', backgroundColor: snackBarError);
       }
     }
   }
@@ -199,7 +202,6 @@ class _LoginScreenState extends State<LoginScreen>
     super.dispose();
     authDataHandlingController.dispose();
   }
-
 
   @override
   // TODO: implement wantKeepAlive

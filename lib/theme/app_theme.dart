@@ -17,6 +17,18 @@ ThemeData myTheme = ThemeData(
         color: Colors.black,
       ),
     ),
+    appBarTheme: AppBarTheme(
+      color: Colors.white,
+      elevation: 0,
+      iconTheme: IconThemeData(color: Colors.black),
+      textTheme: TextTheme(
+        headline6: TextStyle(
+          fontFamily: 'Avenir',
+          fontSize: 18,
+          color: Colors.black,
+        ),
+      ),
+    ),
     primarySwatch: const MaterialColor(0xFFFFB703, color),
     primaryColor: yellow,
     accentColor: orange,
