@@ -44,10 +44,11 @@ class _OtpScreenState extends State<OtpScreen> {
 
   void signInWithPhoneAuthCredential(
       PhoneAuthCredential phoneAuthCredential) async {
-    setState(() {
-      CustomSnackBar.showSnackBar(title: 'Phone Number Verified', message: '', backgroundColor: snackBarSuccess);
-      showLoading = true;
-    });
+    try {} finally {
+      setState(() {
+        showLoading = true;
+      });
+    }
 
     try {
       final authCredential =
@@ -72,7 +73,7 @@ class _OtpScreenState extends State<OtpScreen> {
           navigationController.getOffAll(homeScreen);
         } else {
           final errorMsg =
-          AuthExceptionHandler.generateExceptionMessage(status);
+              AuthExceptionHandler.generateExceptionMessage(status);
           CustomSnackBar.showSnackBar(
               title: errorMsg, message: '', backgroundColor: snackBarError);
         }
@@ -82,8 +83,8 @@ class _OtpScreenState extends State<OtpScreen> {
         showLoading = false;
       });
 
-      CustomSnackBar.showSnackBar(title: e.toString(), message: '', backgroundColor: snackBarError);
-
+      CustomSnackBar.showSnackBar(
+          title: e.toString(), message: '', backgroundColor: snackBarError);
     }
   }
 
@@ -190,19 +191,23 @@ class _OtpScreenState extends State<OtpScreen> {
                             setState(() {
                               showLoading = false;
                             });
-                            CustomSnackBar.showSnackBar(title: verificationFailed.message.toString() , message: '', backgroundColor: snackBarSuccess);;
+                            CustomSnackBar.showSnackBar(
+                                title: verificationFailed.message.toString(),
+                                message: '',
+                                backgroundColor: snackBarError);
+                            ;
                           },
                           codeSent: (verificationId, resendingToken) async {
                             setState(() {
                               showLoading = false;
-                              currentState =
-                                  PhoneVerificationPageState.SHOW_OTP_FORM_STATE;
+                              currentState = PhoneVerificationPageState
+                                  .SHOW_OTP_FORM_STATE;
                               this.verificationId = verificationId;
                             });
                           },
                           codeAutoRetrievalTimeout: (verificationId) async {},
                         );
-                      }else {
+                      } else {
                         setState(() {
                           showLoading = false;
                         });
@@ -310,7 +315,8 @@ class _OtpScreenState extends State<OtpScreen> {
                                     verificationId: verificationId!,
                                     smsCode: pin);
 
-                            Future.delayed(const Duration(milliseconds: 1000), () {
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
                               signInWithPhoneAuthCredential(
                                   phoneAuthCredential);
                             });
@@ -325,19 +331,6 @@ class _OtpScreenState extends State<OtpScreen> {
                           Text(
                             'SIGN UP',
                             style: Theme.of(context).primaryTextTheme.headline5,
-                          ),
-                          FloatingActionButton(
-                            onPressed: () {},
-                            child: const Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
-                            ),
-                            backgroundColor: Theme.of(context)
-                                .floatingActionButtonTheme
-                                .backgroundColor,
-                            elevation: Theme.of(context)
-                                .floatingActionButtonTheme
-                                .elevation,
                           ),
                         ],
                       ),
@@ -358,7 +351,7 @@ class _OtpScreenState extends State<OtpScreen> {
           key: _scaffoldKey,
           body: Container(
             child: showLoading
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(),
                   )
                 : currentState ==
@@ -381,63 +374,63 @@ class _OtpScreenState extends State<OtpScreen> {
 // }
 
 // class _OtpBottomSheetState extends State<OtpBottomSheet> {
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   trySubmit();
-  // }
+// @override
+// void initState() {
+//   // TODO: implement initState
+//   super.initState();
+//   trySubmit();
+// }
 
-  // void trySubmit() async {
-  //   // CONFIRM OTP AND THEN Create user on auth request
-  //   // PHONE OTP AUTHENTICATION
-  //   await FirebaseAuth.instance.verifyPhoneNumber(
-  //     phoneNumber: '+923${authDataHandlingController.userPhone.value}',
-  //     timeout: const Duration(seconds: 60),
-  //     verificationCompleted: (PhoneAuthCredential credential) async {
-  //       UserCredential result =
-  //           await FirebaseAuth.instance.signInWithCredential(credential);
-  //       if (result.user != null) {
-  //         print('CODE SUCCESSFUL');
+// void trySubmit() async {
+//   // CONFIRM OTP AND THEN Create user on auth request
+//   // PHONE OTP AUTHENTICATION
+//   await FirebaseAuth.instance.verifyPhoneNumber(
+//     phoneNumber: '+923${authDataHandlingController.userPhone.value}',
+//     timeout: const Duration(seconds: 60),
+//     verificationCompleted: (PhoneAuthCredential credential) async {
+//       UserCredential result =
+//           await FirebaseAuth.instance.signInWithCredential(credential);
+//       if (result.user != null) {
+//         print('CODE SUCCESSFUL');
 
-  //         final status = await authController.createUser(
-  //           authDataHandlingController.userEmail.value,
-  //           authDataHandlingController.userPassword.value,
-  //           authDataHandlingController.userName.value,
-  //           authDataHandlingController.userPhone.value,
-  //         );
-  //         if (status == AuthResultStatus.successful) {
-  //           CustomSnackBar.showSnackBar(
-  //               title: "Account created Successfully",
-  //               message: '',
-  //               backgroundColor: snackBarSuccess);
-  //         } else {
-  //           final errorMsg =
-  //               AuthExceptionHandler.generateExceptionMessage(status);
-  //           CustomSnackBar.showSnackBar(
-  //               title: errorMsg, message: '', backgroundColor: snackBarError);
-  //         }
-  //       }
-  //     },
-  //     verificationFailed: (FirebaseAuthException e) {
-  //       if (e.code == 'invalid-phone-number') {
-  //         CustomSnackBar.showSnackBar(
-  //             title: 'The provided phone number is not valid',
-  //             message: '',
-  //             backgroundColor: snackBarError);
-  //       }
-  //     },
-  //     codeSent: (String verificationId, int? resendToken) async {
-  //       PhoneAuthCredential credential = PhoneAuthProvider.credential(
-  //           verificationId: verificationId, smsCode: myCode!);
-  //       UserCredential result =
-  //           await FirebaseAuth.instance.signInWithCredential(credential);
-  //       if (result.user != null) {
-  //         print('CODE SUCCESSFUL');
-  //       }
-  //     },
-  //     codeAutoRetrievalTimeout: (String verificationId) {
-  //       print(verificationId);
-  //     },
-  //   );
-  // }
+//         final status = await authController.createUser(
+//           authDataHandlingController.userEmail.value,
+//           authDataHandlingController.userPassword.value,
+//           authDataHandlingController.userName.value,
+//           authDataHandlingController.userPhone.value,
+//         );
+//         if (status == AuthResultStatus.successful) {
+//           CustomSnackBar.showSnackBar(
+//               title: "Account created Successfully",
+//               message: '',
+//               backgroundColor: snackBarSuccess);
+//         } else {
+//           final errorMsg =
+//               AuthExceptionHandler.generateExceptionMessage(status);
+//           CustomSnackBar.showSnackBar(
+//               title: errorMsg, message: '', backgroundColor: snackBarError);
+//         }
+//       }
+//     },
+//     verificationFailed: (FirebaseAuthException e) {
+//       if (e.code == 'invalid-phone-number') {
+//         CustomSnackBar.showSnackBar(
+//             title: 'The provided phone number is not valid',
+//             message: '',
+//             backgroundColor: snackBarError);
+//       }
+//     },
+//     codeSent: (String verificationId, int? resendToken) async {
+//       PhoneAuthCredential credential = PhoneAuthProvider.credential(
+//           verificationId: verificationId, smsCode: myCode!);
+//       UserCredential result =
+//           await FirebaseAuth.instance.signInWithCredential(credential);
+//       if (result.user != null) {
+//         print('CODE SUCCESSFUL');
+//       }
+//     },
+//     codeAutoRetrievalTimeout: (String verificationId) {
+//       print(verificationId);
+//     },
+//   );
+// }
