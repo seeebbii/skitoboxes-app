@@ -52,9 +52,38 @@ class WishlistScreen extends StatelessWidget {
                 ),
               )
             ]),
-        body: Obx(() => productController.favoriteBoxes.isEmpty
-            ? Center(child: Text('No items in wishlist'))
-            : ProductItem(filterList: productController.favoriteBoxes)),
+        body: Obx(
+          () => productController.favoriteBoxes.isEmpty
+              ? Center(child: Text('No items in wishlist'))
+              : ListView.builder(
+                  itemCount: productController.favoriteBoxes.length,
+                  itemBuilder: (BuildContext context, int index) => InkWell(
+                    onTap: () {
+                      navigationController.navigateToWithArguments(
+                          boxDetails, productController.favoriteBoxes[index]);
+                    },
+                    child: Dismissible(
+                      key: Key(
+                          productController.favoriteBoxes[index].id.toString()),
+                      background: Container(
+                        padding: const EdgeInsets.only(right: 40),
+                        alignment: Alignment.centerRight,
+                        child: Icon(
+                          Icons.delete,
+                          size: 25,
+                        ),
+                      ),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (direction) {
+                        productController.favoriteBoxes
+                            .remove(productController.favoriteBoxes[index]);
+                      },
+                      child: ProductItem(
+                          box: productController.favoriteBoxes[index]),
+                    ),
+                  ),
+                ),
+        ),
       ),
     );
   }

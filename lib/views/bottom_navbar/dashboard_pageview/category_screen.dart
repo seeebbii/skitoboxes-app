@@ -35,8 +35,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ProductItem(
-      filterList: _filterList,
-    );
+    return ListView.builder(
+        itemCount: _filterList.length,
+        itemBuilder: (BuildContext context, int index) => InkWell(
+              onTap: () {
+                navigationController.navigateToWithArguments(
+                    boxDetails, _filterList[index]);
+              },
+              child: ProductItem(box: _filterList[index]),
+            ));
   }
 }
