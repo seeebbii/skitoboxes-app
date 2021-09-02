@@ -23,7 +23,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: Obx(
         () => productController.inCart.isEmpty
-            ? Center(child: Text('Cart is empty'))
+            ? const Center(child: Text('Cart is empty'))
             : Column(
                 children: [
                   Expanded(

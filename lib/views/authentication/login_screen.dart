@@ -161,13 +161,13 @@ class _LoginScreenState extends State<LoginScreen>
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () => navigationController.goBack(),
+                  onPressed: () => authController.loginWithGoogle(),
                   child: const Text('f'),
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50)),
                 ),
                 ElevatedButton(
-                  onPressed: () => navigationController.goBack(),
+                  onPressed: () => authController.loginWithGoogle(),
                   child: const Text('G'),
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50)),

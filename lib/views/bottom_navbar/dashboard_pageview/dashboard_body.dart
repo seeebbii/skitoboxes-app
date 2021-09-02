@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skitoboxes/constants/colors.dart';
@@ -8,7 +9,7 @@ import 'package:skitoboxes/router/route_generator.dart';
 import 'package:skitoboxes/views/bottom_navbar/dashboard_pageview/category_screen.dart';
 import 'package:skitoboxes/views/bottom_navbar/dashboard_pageview/dashboard_screen.dart';
 import 'package:skitoboxes/widgets/custom_drawer.dart';
-import 'package:badges/badges.dart';
+
 
 class DashboardBody extends StatefulWidget {
   DashboardBody({Key? key}) : super(key: key);
