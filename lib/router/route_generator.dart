@@ -1,10 +1,13 @@
 // STATIC ROUTES NAME
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/home_screen.dart';
+import 'package:skitoboxes/models/address.dart';
 import 'package:skitoboxes/models/box.dart';
 import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
 import 'package:skitoboxes/views/box_details.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
+import 'package:skitoboxes/views/profile_settings/edit_address_screen.dart';
+import 'package:skitoboxes/views/profile_settings/manage_address_screen.dart';
 import 'package:skitoboxes/views/profile_settings/subscription_screen.dart';
 import 'package:skitoboxes/views/purchase/cart_screen.dart';
 import 'package:skitoboxes/views/purchase/payment_screen.dart';
@@ -19,6 +22,8 @@ const String boxDetails = '/box-details';
 const String cart = '/cart';
 const String subscriptionScreen = '/subscription-screen';
 const String payment = '/payment';
+const String manageAddress = '/manage-address';
+const String editAddress = '/edit-address';
 
 // ignore: todo
 // TODO : ROUTES GENERATOR CLASS THAT CONTROLS THE FLOW OF NAVIGATION/ROUTING
@@ -51,6 +56,12 @@ class RouteGenerator {
 
       case payment:
         return _getPageRoute(const PaymentScreen());
+
+      case manageAddress:
+        return _getPageRoute(ManageAddressScreen());
+
+      case editAddress:
+        return _getPageRoute(EditAddressScreen(address: args as Address));
 
       default:
         return _errorRoute();

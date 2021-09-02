@@ -4,6 +4,7 @@ import 'package:skitoboxes/models/box.dart';
 class ProductController extends GetxController {
   var inCart = <Box>[].obs;
   var favoriteBoxes = <Box>[].obs;
+
   List<Box> boxesList = [
     Box(
       id: 1,

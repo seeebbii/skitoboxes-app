@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/product/product_controller.dart';
-import 'package:dotted_line/dotted_line.dart';
 import 'package:skitoboxes/router/route_generator.dart';
 
 class CartScreen extends StatefulWidget {
@@ -137,9 +136,11 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                   ),
-                  DottedLine(
-                    lineLength: MediaQuery.of(context).size.width * 0.85,
-                    dashColor: Colors.grey.shade400,
+                  Divider(
+                    height: 0,
+                    indent: 10,
+                    endIndent: 10,
+                    color: Colors.grey.shade400,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -8,7 +8,7 @@ class AuthModel {
   String? email;
   int? phoneNumber;
   String? imageUrl;
-  Address? address;
+  List<Address>? address;
   PaymentCard? paymentCard;
 
   AuthModel(

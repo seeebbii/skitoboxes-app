@@ -12,10 +12,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final List<RadioCardModel> cardData = [
-    RadioCardModel(false, Icons.subscriptions_outlined, 'Subscriptions', subscriptionScreen),
+    RadioCardModel(false, Icons.subscriptions_outlined, 'Subscriptions',
+        subscriptionScreen),
     RadioCardModel(false, Icons.delivery_dining_outlined, 'Orders', ''),
     RadioCardModel(false, Icons.favorite_outline, 'Wishlist', ''),
-    RadioCardModel(false, Icons.notifications_active_outlined, 'Notifications', ''),
+    RadioCardModel(
+        false, Icons.notifications_active_outlined, 'Notifications', ''),
     RadioCardModel(false, Icons.settings_outlined, 'Settings', ''),
     RadioCardModel(false, Icons.logout_outlined, 'Sign Out', ''),
   ];
@@ -60,25 +62,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ListTile(
                       title: Text('Edit Profile',
                           style: Theme.of(context).textTheme.bodyText1),
-                      leading: Icon(Icons.edit_outlined, size: 18),
+                      leading: Icon(Icons.person_outline, size: 18),
                       trailing: Icon(
                         Icons.arrow_forward_outlined,
                         size: 18,
                       ),
                     ),
-                    ListTile(
-                      title: Text('Edit Phone Number',
-                          style: Theme.of(context).textTheme.bodyText1),
-                      leading: Icon(Icons.phone_android_outlined, size: 18),
-                      trailing: Icon(
-                        Icons.arrow_forward_outlined,
-                        size: 18,
+                    InkWell(
+                      onTap: () {
+                        navigationController.navigateTo(manageAddress);
+                      },
+                      child: ListTile(
+                        title: Text('Manage Address',
+                            style: Theme.of(context).textTheme.bodyText1),
+                        leading: Icon(Icons.location_city_outlined, size: 18),
+                        trailing: Icon(
+                          Icons.arrow_forward_outlined,
+                          size: 18,
+                        ),
                       ),
                     ),
                     ListTile(
-                      title: Text('Edit Address',
+                      title: Text('Manage Payment Details',
                           style: Theme.of(context).textTheme.bodyText1),
-                      leading: Icon(Icons.location_city_outlined, size: 18),
+                      leading: Icon(Icons.credit_card_outlined, size: 18),
                       trailing: Icon(
                         Icons.arrow_forward_outlined,
                         size: 18,
@@ -98,7 +105,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   highlightColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   onTap: () {
-                    navigationController.navigateTo(cardData[index].navigationRoute);
+                    navigationController
+                        .navigateTo(cardData[index].navigationRoute);
                     setState(() {
                       cardData.forEach((element) => element.isSelected = false);
                       cardData[index].isSelected = true;
