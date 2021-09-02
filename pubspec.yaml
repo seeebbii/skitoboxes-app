@@ -43,6 +43,7 @@ dependencies:
   like_button: ^2.0.3
   badges: ^2.0.1
   dotted_line: ^3.0.0
+  dotted_border: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,10 @@ flutter:
     - assets/animation/logo_white.riv
     - assets/animation/logo_orange.riv
     - assets/images/box.png
+    - assets/images/map.jpg
+    - assets/images/mastercard.png
+    - assets/images/visa.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

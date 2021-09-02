@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skitoboxes/constants/colors.dart';
+import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/product/product_controller.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:skitoboxes/router/route_generator.dart';
 
 class CartScreen extends StatefulWidget {
   CartScreen({Key? key}) : super(key: key);
@@ -158,7 +160,9 @@ class _CartScreenState extends State<CartScreen> {
                     padding:
                         const EdgeInsets.only(bottom: 20, left: 20, right: 20),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        navigationController.navigateTo(payment);
+                      },
                       child: Text(
                         'Payment',
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
