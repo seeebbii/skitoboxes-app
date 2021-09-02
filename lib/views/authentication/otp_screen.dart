@@ -8,7 +8,6 @@ import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/constants/custom_snackbar.dart';
 import 'package:skitoboxes/controllers/authentication/auth_controller.dart';
-import 'package:skitoboxes/home_screen.dart';
 import 'package:skitoboxes/router/route_generator.dart';
 import 'package:skitoboxes/utils/auth_exception_handler.dart';
 
@@ -73,7 +72,7 @@ class _OtpScreenState extends State<OtpScreen> {
       }
     } on FirebaseAuthException catch (e) {
       CustomSnackBar.showSnackBar(
-          title: e.toString(), message: '', backgroundColor: snackBarError);
+          title: 'Invalid Otp', message: '', backgroundColor: snackBarError);
     }
   }
 
@@ -179,7 +178,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           },
                           verificationFailed: (verificationFailed) async {
                             CustomSnackBar.showSnackBar(
-                                title: verificationFailed.message.toString(),
+                                title: 'Invalid Otp',
                                 message: '',
                                 backgroundColor: snackBarError);
                           },

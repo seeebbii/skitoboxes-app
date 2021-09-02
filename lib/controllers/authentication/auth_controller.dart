@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/constants/custom_snackbar.dart';
@@ -16,6 +17,8 @@ class AuthController extends GetxController {
   final firebaseUser = FirebaseAuth.instance.currentUser.obs;
   var currentUser = AuthModel().obs;
 
+
+  final googleSignIn = GoogleSignIn();
 
   AuthResultStatus? _status;
 
@@ -97,34 +100,58 @@ class AuthController extends GetxController {
     return _status!;
   }
 
+  // create a user with google/facebook credentials
 
-  // PHONE OTP AUTHENTICATION
-  // void verifyPhoneNumber(String number) async {
-  //   await _auth.verifyPhoneNumber(
-  //     phoneNumber: '+92 3$number',
-  //     timeout: const Duration(seconds: 60),
-  //     verificationCompleted: (PhoneAuthCredential credential) async{
-  //       UserCredential result = await _auth.signInWithCredential(credential);
-  //       if(result.user != null){
-  //         print('CODE SUCCESSFUL');
-  //       }
-  //     },
-  //     verificationFailed: (FirebaseAuthException e) {
-  //       if (e.code == 'invalid-phone-number') {
-  //         CustomSnackBar.showSnackBar(title: 'The provided phone number is not valid', message: '', backgroundColor: snackBarError);
-  //       }
-  //     },
-  //     codeSent: (String verificationId, int? resendToken) {
-  //
-  //     },
-  //     codeAutoRetrievalTimeout: (String verificationId) {},
-  //   );
-  // }
+  Future createUserWithSocial(UserCredential _authResult) async {
+    Future.delayed(const Duration(milliseconds: 1000), () async {
 
+
+      // CHECK IF THE USER STILL EXISTS IN OUR MONGODB DATABASE
+
+      print(_authResult.user!.phoneNumber);
+
+
+      navigationController.getOffAll(homeScreen);
+
+      // AuthModel _user = AuthModel(
+      //   uid: _authResult.user!.uid,
+      //   name: _authResult.user!.displayName,
+      //   email: _authResult.user!.email,
+      //   imageUrl: _authResult.user!.photoURL,
+      // );
+
+          // CREATE USER IN DATABASE (MONGO DB)
+
+          // LOAD USER FROM DATABASE (MONGO DB)
+
+    });
+  }
+
+  // GOOGLE LOGIN
+
+  void loginWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    try {
+      final GoogleSignInAuthentication googleAuth =
+      await googleUser!.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      _auth.signInWithCredential(credential).then((value) {
+        createUserWithSocial(value);
+      });
+
+    } catch (e) {
+      CustomSnackBar.showSnackBar(title: "Error login Account", message: '', backgroundColor: snackBarError);
+      rethrow;
+    }
+  }
 
   // LOGOUT
   void logOut() async {
     try {
+      await googleSignIn.signOut();
       await _auth.signOut();
       navigationController.getOffAll(landing);
     } catch (e) {

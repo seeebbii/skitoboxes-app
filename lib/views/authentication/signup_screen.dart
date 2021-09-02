@@ -134,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen>
                       ),
                     ),
                     TextFormField(
-                      textInputAction: TextInputAction.next,
+                      textInputAction: TextInputAction.done,
                       controller: passwordController,
                       validator: (value) {
                         if (value!.isEmpty) {
