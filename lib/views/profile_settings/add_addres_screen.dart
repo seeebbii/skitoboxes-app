@@ -5,16 +5,14 @@ import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/order_controller.dart';
 import 'package:skitoboxes/models/address.dart';
 
-class EditAddressScreen extends StatefulWidget {
-  EditAddressScreen({Key? key, this.address}) : super(key: key);
-
-  Address? address;
+class AddAddressScreen extends StatefulWidget {
+  AddAddressScreen({Key? key}) : super(key: key);
 
   @override
-  _EditAddressScreenState createState() => _EditAddressScreenState();
+  _AddAddressScreenState createState() => _AddAddressScreenState();
 }
 
-class _EditAddressScreenState extends State<EditAddressScreen> {
+class _AddAddressScreenState extends State<AddAddressScreen> {
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController nameController = TextEditingController();
@@ -27,34 +25,26 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
 
   @override
   void initState() {
-    nameController.text = widget.address!.name!;
-    receiverNameController.text = widget.address!.receiverName!;
-    phoneController.text = widget.address!.receiverNumber!;
-    addressController.text = widget.address!.address!;
-    cityController.text = widget.address!.city!;
-    provinceController.text = widget.address!.province!;
-    zipController.text = widget.address!.zipCode!;
     super.initState();
   }
 
-  void _saveAddress(int index) async {
+  void _saveAddress() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
     if (isValid) {
       _formKey.currentState!.save();
-      orderController.address.indexWhere((element) {
-        if (element.id == index) {
-          element.name = nameController.text;
-          element.receiverName = receiverNameController.text;
-          element.receiverNumber = phoneController.text;
-          element.address = addressController.text;
-          element.city = cityController.text;
-          element.province = provinceController.text;
-          element.zipCode = zipController.text;
-        }
-        return element.id == index;
-      });
+
+      orderController.address.add(Address(
+        id: orderController.address.length,
+        name: nameController.text,
+        receiverName: receiverNameController.text,
+        receiverNumber: phoneController.text,
+        address: addressController.text,
+        city: cityController.text,
+        province: provinceController.text,
+        zipCode: zipController.text,
+      ));
     }
     navigationController.goBack();
   }
@@ -74,19 +64,22 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
             key: _formKey,
             child: Column(
               children: [
-                textFieldBody(context, 'Name', nameController),
-                textFieldBody(context, 'Reciever Name', receiverNameController),
-                textFieldBody(context, 'Phone Number', phoneController),
-                textFieldBody(context, 'Address', addressController),
-                textFieldBody(context, 'City', cityController),
-                textFieldBody(context, 'Province', provinceController),
-                textFieldBody(context, 'ZipCode', zipController),
+                textFieldBody(context, 'Name', nameController, 'Home/Work'),
+                textFieldBody(context, 'Reciever Name', receiverNameController,
+                    'Who is going to receive the order?'),
+                textFieldBody(
+                    context, 'Phone Number', phoneController, '+923---------'),
+                textFieldBody(context, 'Address', addressController,
+                    'House/Street/Block/Town'),
+                textFieldBody(context, 'City', cityController, ''),
+                textFieldBody(context, 'Province', provinceController, ''),
+                textFieldBody(context, 'ZipCode', zipController, 'Postal Code'),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: ElevatedButton(
                     onPressed: () {
-                      _saveAddress(widget.address!.id!);
+                      _saveAddress();
                     },
                     child: Text(
                       'Save',
@@ -111,14 +104,19 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         ));
   }
 
-  Padding textFieldBody(
-      BuildContext context, String? title, TextEditingController? _controller) {
+  Padding textFieldBody(BuildContext context, String? title,
+      TextEditingController? _controller, String? hintText) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: TextFormField(
         controller: _controller,
         style: Theme.of(context).textTheme.bodyText1,
         decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(fontSize: 14, color: Colors.grey.shade500),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),

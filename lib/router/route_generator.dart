@@ -6,6 +6,7 @@ import 'package:skitoboxes/models/box.dart';
 import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
 import 'package:skitoboxes/views/box_details.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
+import 'package:skitoboxes/views/profile_settings/add_addres_screen.dart';
 import 'package:skitoboxes/views/profile_settings/edit_address_screen.dart';
 import 'package:skitoboxes/views/profile_settings/manage_address_screen.dart';
 import 'package:skitoboxes/views/profile_settings/subscription_screen.dart';
@@ -24,6 +25,7 @@ const String subscriptionScreen = '/subscription-screen';
 const String payment = '/payment';
 const String manageAddress = '/manage-address';
 const String editAddress = '/edit-address';
+const String addAddress = '/add-address';
 
 // ignore: todo
 // TODO : ROUTES GENERATOR CLASS THAT CONTROLS THE FLOW OF NAVIGATION/ROUTING
@@ -62,6 +64,9 @@ class RouteGenerator {
 
       case editAddress:
         return _getPageRoute(EditAddressScreen(address: args as Address));
+
+      case addAddress:
+        return _getPageRoute(AddAddressScreen());
 
       default:
         return _errorRoute();

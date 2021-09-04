@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skitoboxes/constants/colors.dart';
+import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/order_controller.dart';
 import 'package:skitoboxes/controllers/product/product_controller.dart';
 
@@ -13,7 +14,6 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   ProductController productController = Get.put(ProductController());
-  OrderController orderController = Get.put(OrderController());
 
   TextEditingController voucherController = TextEditingController();
   @override

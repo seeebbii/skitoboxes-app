@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/authentication/auth_controller.dart';
 import 'package:skitoboxes/controllers/navigation/navigation_controller.dart';
+import 'package:skitoboxes/controllers/order_controller.dart';
 import 'package:skitoboxes/router/route_generator.dart';
 import 'package:skitoboxes/theme/app_theme.dart';
 import 'controllers/authentication/auth_data_handling_controller.dart';
@@ -18,6 +19,7 @@ void main() async {
   Get.put(
     AuthDataHandlingController(),
   );
+  Get.put(OrderController());
 
   runApp(const MyApp());
 }

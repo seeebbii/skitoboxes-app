@@ -87,7 +87,9 @@ class _BoxDetailsState extends State<BoxDetails> {
             child: IconButton(
               icon: Icon(Icons.card_travel_outlined),
               onPressed: () {
-                navigationController.navigateTo(cart);
+                navigationController
+                    .navigateTo(cart)
+                    .then((value) => setState(() {}));
               },
             ),
           )
