@@ -40,7 +40,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         itemBuilder: (BuildContext context, int index) => InkWell(
               onTap: () {
                 navigationController.navigateToWithArguments(
-                    boxDetails, _filterList[index]);
+                    boxDetails, {"boxDetails": _filterList[index]});
               },
               child: ProductItem(box: _filterList[index]),
             ));

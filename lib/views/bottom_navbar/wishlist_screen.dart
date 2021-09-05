@@ -59,8 +59,9 @@ class WishlistScreen extends StatelessWidget {
                   itemCount: productController.favoriteBoxes.length,
                   itemBuilder: (BuildContext context, int index) => InkWell(
                     onTap: () {
-                      navigationController.navigateToWithArguments(
-                          boxDetails, productController.favoriteBoxes[index]);
+                      navigationController.navigateToWithArguments(boxDetails, {
+                        "boxDetails": productController.favoriteBoxes[index]
+                      });
                     },
                     child: Dismissible(
                       key: Key(

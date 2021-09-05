@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/router/route_generator.dart';
+import 'package:skitoboxes/views/profile_settings/address/address_field_body.dart';
 
 class ManageAddressScreen extends StatefulWidget {
   ManageAddressScreen({Key? key}) : super(key: key);
@@ -52,8 +53,12 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
                     TextButton(
                       onPressed: () {
                         navigationController
-                            .navigateTo(addAddress)
-                            .then((value) => setState(() {}));
+                            .navigateToWithArguments(addressForm, {
+                          'typeMode': FormType.addNew,
+                          'address': null,
+                        }).then((value) {
+                          setState(() {});
+                        });
                       },
                       child: Text('Add Address'),
                     ),
@@ -216,9 +221,11 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
                                       onTap: () {
                                         navigationController
                                             .navigateToWithArguments(
-                                                editAddress,
-                                                orderController.address[index])
-                                            .then((value) {
+                                                addressForm, {
+                                          "typeMode": FormType.edit,
+                                          "address":
+                                              orderController.address[index],
+                                        }).then((value) {
                                           setState(() {});
                                         });
                                       },
@@ -243,8 +250,12 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
                       TextButton(
                         onPressed: () {
                           navigationController
-                              .navigateTo(addAddress)
-                              .then((value) => setState(() {}));
+                              .navigateToWithArguments(addressForm, {
+                            'typeMode': FormType.addNew,
+                            'address': null,
+                          }).then((value) {
+                            setState(() {});
+                          });
                         },
                         child: Text('Add Another Address'),
                       ),

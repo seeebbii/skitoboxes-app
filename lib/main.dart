@@ -17,7 +17,7 @@ void main() async {
   Get.put(NavigationController());
   Get.put(AuthController());
   Get.put(
-    AuthDataHandlingController(),
+    AuthDataHandlingController()
   );
   Get.put(OrderController());
 

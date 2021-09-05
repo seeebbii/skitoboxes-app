@@ -6,9 +6,10 @@ import 'package:skitoboxes/models/box.dart';
 import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
 import 'package:skitoboxes/views/box_details.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
-import 'package:skitoboxes/views/profile_settings/add_addres_screen.dart';
-import 'package:skitoboxes/views/profile_settings/edit_address_screen.dart';
-import 'package:skitoboxes/views/profile_settings/manage_address_screen.dart';
+import 'package:skitoboxes/views/profile_settings/address/add_addres_screen.dart';
+import 'package:skitoboxes/views/profile_settings/address/address_field_body.dart';
+import 'package:skitoboxes/views/profile_settings/address/edit_address_screen.dart';
+import 'package:skitoboxes/views/profile_settings/address/manage_address_screen.dart';
 import 'package:skitoboxes/views/profile_settings/subscription_screen.dart';
 import 'package:skitoboxes/views/purchase/cart_screen.dart';
 import 'package:skitoboxes/views/purchase/payment_screen.dart';
@@ -24,8 +25,7 @@ const String cart = '/cart';
 const String subscriptionScreen = '/subscription-screen';
 const String payment = '/payment';
 const String manageAddress = '/manage-address';
-const String editAddress = '/edit-address';
-const String addAddress = '/add-address';
+const String addressForm = '/address-form';
 
 // ignore: todo
 // TODO : ROUTES GENERATOR CLASS THAT CONTROLS THE FLOW OF NAVIGATION/ROUTING
@@ -33,7 +33,8 @@ const String addAddress = '/add-address';
 class RouteGenerator {
   // FUNCTION THAT HANDLES ROUTING
   static Route<dynamic> onGeneratedRoutes(RouteSettings settings) {
-    final args = settings.arguments;
+    final args = settings.arguments as Map;
+
     switch (settings.name) {
       case initialRoute:
         return _getPageRoute(const MainSplashScreen());
@@ -48,7 +49,7 @@ class RouteGenerator {
         return _getPageRoute(HomeScreen());
 
       case boxDetails:
-        return _getPageRoute(BoxDetails(box: args as Box));
+        return _getPageRoute(BoxDetails(box: args['boxDetails'] as Box));
 
       case cart:
         return _getPageRoute(CartScreen());
@@ -62,11 +63,11 @@ class RouteGenerator {
       case manageAddress:
         return _getPageRoute(ManageAddressScreen());
 
-      case editAddress:
-        return _getPageRoute(EditAddressScreen(address: args as Address));
-
-      case addAddress:
-        return _getPageRoute(AddAddressScreen());
+      case addressForm:
+        return _getPageRoute(AddressForm(
+          typeMode: args['typeMode'] as FormType,
+          address: args['address'] as Address,
+        ));
 
       default:
         return _errorRoute();

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
-import 'package:skitoboxes/controllers/order_controller.dart';
 import 'package:skitoboxes/controllers/product/product_controller.dart';
+import 'package:skitoboxes/router/route_generator.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);
@@ -37,44 +37,51 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         .bodyText1!
                         .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
               ),
-              Card(
-                elevation: 5,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.asset(
-                        'assets/images/map.jpg',
-                        width: 120,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Expanded(
-                      child: ListTile(
-                        title: Text(
-                          '${orderController.address[0].name}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(
-                          '${orderController.address[0].address}, ${orderController.address[0].city} ${orderController.address[0].zipCode}, ${orderController.address[0].province}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 12, color: Colors.grey.shade700),
+              InkWell(
+                onTap: () {
+                  navigationController
+                      .navigateTo(manageAddress)
+                      .then((value) => setState(() {}));
+                },
+                child: Card(
+                  elevation: 5,
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          'assets/images/map.jpg',
+                          width: 120,
+                          height: 100,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: ListTile(
+                          title: Text(
+                            '${orderController.address[orderController.selectedAddress].name}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            '${orderController.address[orderController.selectedAddress].address}, ${orderController.address[orderController.selectedAddress].city} ${orderController.address[orderController.selectedAddress].zipCode}, ${orderController.address[orderController.selectedAddress].province}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                    fontSize: 12, color: Colors.grey.shade700),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(
