@@ -197,6 +197,5 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

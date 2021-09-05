@@ -1,7 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/controllers/product/product_controller.dart';
 import 'package:skitoboxes/models/box.dart';
@@ -9,7 +8,6 @@ import 'package:skitoboxes/router/route_generator.dart';
 import 'package:skitoboxes/views/bottom_navbar/dashboard_pageview/category_screen.dart';
 import 'package:skitoboxes/views/bottom_navbar/dashboard_pageview/dashboard_screen.dart';
 import 'package:skitoboxes/widgets/custom_drawer.dart';
-
 
 class DashboardBody extends StatefulWidget {
   DashboardBody({Key? key}) : super(key: key);

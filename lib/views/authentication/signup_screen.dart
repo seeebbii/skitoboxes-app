@@ -3,7 +3,6 @@ import 'package:rive/rive.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/constants/custom_snackbar.dart';
-import 'package:get/get.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -21,7 +20,6 @@ class _SignupScreenState extends State<SignupScreen>
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
   void _trySubmit() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
@@ -30,15 +28,20 @@ class _SignupScreenState extends State<SignupScreen>
       _formKey.currentState!.save();
       // IF THE DATA IS VALIDATED, TAKE USER TO OTP SCREEN FOR CONFIRMATION
 
-      authController.checkDuplicateEmail(authDataHandlingController.userEmail.value).then((value){
-        if(value.isEmpty){
-          navigationController.sheetController.animateToPage(2, duration: const Duration(milliseconds: 500),
+      authController
+          .checkDuplicateEmail(authDataHandlingController.userEmail.value)
+          .then((value) {
+        if (value.isEmpty) {
+          navigationController.sheetController.animateToPage(2,
+              duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut);
-        }else{
-          CustomSnackBar.showSnackBar(title: 'Email Already Exists', message: '', backgroundColor: snackBarError);
+        } else {
+          CustomSnackBar.showSnackBar(
+              title: 'Email Already Exists',
+              message: '',
+              backgroundColor: snackBarError);
         }
       });
-
     }
   }
 
@@ -126,7 +129,7 @@ class _SignupScreenState extends State<SignupScreen>
                         return null;
                       },
                       onSaved: (value) {
-                        authDataHandlingController.userEmail.value  = value!;
+                        authDataHandlingController.userEmail.value = value!;
                       },
                       decoration: InputDecoration(
                         labelText: 'Email',
@@ -145,7 +148,7 @@ class _SignupScreenState extends State<SignupScreen>
                         return null;
                       },
                       onSaved: (value) {
-                        authDataHandlingController.userPassword.value  = value!;
+                        authDataHandlingController.userPassword.value = value!;
                       },
                       obscureText: obSecure,
                       decoration: InputDecoration(
@@ -218,6 +221,5 @@ class _SignupScreenState extends State<SignupScreen>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

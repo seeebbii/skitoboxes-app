@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/models/box.dart';
-import 'package:skitoboxes/router/route_generator.dart';
 
 class ProductItem extends StatelessWidget {
   ProductItem({Key? key, this.box}) : super(key: key);
