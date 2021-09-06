@@ -1,7 +1,6 @@
 class PaymentCard {
   final int? id;
-  final String? firstName;
-  final String? lastName;
+  final String? cardHolderName;
   final String? cardNumber;
   final String? expiryDate;
   final String? cvv;
@@ -9,8 +8,7 @@ class PaymentCard {
 
   PaymentCard({
     this.id,
-    this.firstName,
-    this.lastName,
+    this.cardHolderName,
     this.cardNumber,
     this.expiryDate,
     this.cvv,

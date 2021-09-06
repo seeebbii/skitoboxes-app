@@ -6,8 +6,10 @@ import 'package:skitoboxes/models/box.dart';
 import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
 import 'package:skitoboxes/views/box_details.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
-import 'package:skitoboxes/views/profile_settings/address/address_field_body.dart';
+import 'package:skitoboxes/views/profile_settings/address/address_form.dart';
 import 'package:skitoboxes/views/profile_settings/address/manage_address_screen.dart';
+import 'package:skitoboxes/views/profile_settings/payment/add_payment_screen.dart';
+import 'package:skitoboxes/views/profile_settings/payment/manage_payment.dart';
 import 'package:skitoboxes/views/profile_settings/subscription_screen.dart';
 import 'package:skitoboxes/views/purchase/cart_screen.dart';
 import 'package:skitoboxes/views/purchase/payment_screen.dart';
@@ -24,6 +26,8 @@ const String subscriptionScreen = '/subscription-screen';
 const String payment = '/payment';
 const String manageAddress = '/manage-address';
 const String addressForm = '/address-form';
+const String managePayment = '/manage-payment';
+const String addPayment = '/add-payment';
 
 // ignore: todo
 // TODO : ROUTES GENERATOR CLASS THAT CONTROLS THE FLOW OF NAVIGATION/ROUTING
@@ -53,10 +57,10 @@ class RouteGenerator {
         return _getPageRoute(CartScreen());
 
       case subscriptionScreen:
-        return _getPageRoute(const SubscriptionScreen());
+        return _getPageRoute(SubscriptionScreen());
 
       case payment:
-        return _getPageRoute(const PaymentScreen());
+        return _getPageRoute(PaymentScreen());
 
       case manageAddress:
         return _getPageRoute(ManageAddressScreen());
@@ -66,6 +70,12 @@ class RouteGenerator {
           typeMode: args['typeMode'] as FormType,
           address: args['address'] as Address,
         ));
+
+      case managePayment:
+        return _getPageRoute(ManagePaymentScreen());
+
+      case addPayment:
+        return _getPageRoute(AddPaymentScreen());
 
       default:
         return _errorRoute();

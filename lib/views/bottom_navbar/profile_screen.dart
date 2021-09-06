@@ -59,15 +59,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Icon(Icons.person),
                   ),
                   children: [
-                    ListTile(
-                      title: Text('Edit Profile',
-                          style: Theme.of(context).textTheme.bodyText1),
-                      leading: Icon(Icons.person_outline, size: 18),
-                      trailing: Icon(
-                        Icons.arrow_forward_outlined,
-                        size: 18,
-                      ),
-                    ),
                     InkWell(
                       onTap: () {
                         navigationController.navigateTo(manageAddress);
@@ -82,13 +73,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ),
-                    ListTile(
-                      title: Text('Manage Payment Details',
-                          style: Theme.of(context).textTheme.bodyText1),
-                      leading: Icon(Icons.credit_card_outlined, size: 18),
-                      trailing: Icon(
-                        Icons.arrow_forward_outlined,
-                        size: 18,
+                    InkWell(
+                      onTap: () {
+                        navigationController.navigateTo(managePayment);
+                      },
+                      child: ListTile(
+                        title: Text('Manage Payment Details',
+                            style: Theme.of(context).textTheme.bodyText1),
+                        leading: Icon(Icons.credit_card_outlined, size: 18),
+                        trailing: Icon(
+                          Icons.arrow_forward_outlined,
+                          size: 18,
+                        ),
                       ),
                     ),
                   ],

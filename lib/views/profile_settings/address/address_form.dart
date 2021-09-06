@@ -104,7 +104,6 @@ class _AddressFormState extends State<AddressForm> {
       ),
       body: SingleChildScrollView(
         child: Form(
-          autovalidateMode: AutovalidateMode.always,
           key: _formKey,
           child: Column(
             children: [
@@ -121,7 +120,7 @@ class _AddressFormState extends State<AddressForm> {
               formField(
                 title: 'Phone Number',
                 controller: phoneController,
-                hintText: '+923---------',
+                hintText: '03---------',
                 inputType: TextInputType.number,
               ),
               formField(

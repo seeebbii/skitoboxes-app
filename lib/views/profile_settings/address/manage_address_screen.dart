@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/router/route_generator.dart';
-import 'package:skitoboxes/views/profile_settings/address/address_field_body.dart';
+import 'package:skitoboxes/views/profile_settings/address/address_form.dart';
 
 class ManageAddressScreen extends StatefulWidget {
   ManageAddressScreen({Key? key}) : super(key: key);
