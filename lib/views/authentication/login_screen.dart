@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
-import 'package:skitoboxes/constants/custom_snackbar.dart';
-import 'package:skitoboxes/router/route_generator.dart';
-import 'package:skitoboxes/utils/auth_exception_handler.dart';
+
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -23,23 +21,7 @@ class _LoginScreenState extends State<LoginScreen>
     FocusScope.of(context).unfocus();
 
     if (isValid) {
-      _formKey.currentState!.save();
-
-      //Login user on auth request
-      final status =
-          await authController.loginUser(_userEmail!, _userPassword!);
-      if (status == AuthResultStatus.successful) {
-        CustomSnackBar.showSnackBar(
-            title: "Login Successful",
-            message: '',
-            backgroundColor: snackBarSuccess);
-
-        navigationController.getOffAll(homeScreen);
-      } else {
-        final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
-        CustomSnackBar.showSnackBar(
-            title: errorMsg, message: '', backgroundColor: snackBarError);
-      }
+      // CALL LOGIN METHOD
     }
   }
 
@@ -156,24 +138,24 @@ class _LoginScreenState extends State<LoginScreen>
                     .copyWith(fontWeight: FontWeight.w600, color: darkBlue),
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () => authController.loginWithGoogle(),
-                  child: const Text('f'),
-                  style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 50)),
-                ),
-                ElevatedButton(
-                  onPressed: () => authController.loginWithGoogle(),
-                  child: const Text('G'),
-                  style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 50)),
-                ),
-              ],
-            ),
+            // SizedBox(height: MediaQuery.of(context).size.width * 0.1),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     ElevatedButton(
+            //       onPressed: () => authController.loginWithGoogle(),
+            //       child: const Text('f'),
+            //       style: ElevatedButton.styleFrom(
+            //           padding: const EdgeInsets.symmetric(horizontal: 50)),
+            //     ),
+            //     ElevatedButton(
+            //       onPressed: () => authController.loginWithGoogle(),
+            //       child: const Text('G'),
+            //       style: ElevatedButton.styleFrom(
+            //           padding: const EdgeInsets.symmetric(horizontal: 50)),
+            //     ),
+            //   ],
+            // ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.15),
             Text("Don't have an account?",
                 style: Theme.of(context).textTheme.bodyText1),

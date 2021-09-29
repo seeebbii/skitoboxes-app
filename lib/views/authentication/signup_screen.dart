@@ -30,14 +30,6 @@ class _SignupScreenState extends State<SignupScreen>
       _formKey.currentState!.save();
       // IF THE DATA IS VALIDATED, TAKE USER TO OTP SCREEN FOR CONFIRMATION
 
-      authController.checkDuplicateEmail(authDataHandlingController.userEmail.value).then((value){
-        if(value.isEmpty){
-          navigationController.sheetController.animateToPage(2, duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOut);
-        }else{
-          CustomSnackBar.showSnackBar(title: 'Email Already Exists', message: '', backgroundColor: snackBarError);
-        }
-      });
 
     }
   }
