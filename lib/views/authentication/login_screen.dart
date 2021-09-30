@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'package:skitoboxes/router/route_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
+import 'package:skitoboxes/constants/custom_snackbar.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -10,10 +13,11 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
-    with AutomaticKeepAliveClientMixin<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with AutomaticKeepAliveClientMixin<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? _userEmail, _userPassword;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool obSecure = true;
 
   void _trySubmit() async {
@@ -22,11 +26,22 @@ class _LoginScreenState extends State<LoginScreen>
 
     if (isValid) {
       // CALL LOGIN METHOD
+      authController.loginUser(emailController.text,passwordController.text).then((response){
+
+        if(response.statusCode == 200){
+          navigationController.getOffAll(homeScreen);
+          CustomSnackBar.showSnackBar(title: 'Login Successful', message: '', backgroundColor: snackBarSuccess);
+        }else{
+          String message = jsonDecode(response.body)['error'];
+          CustomSnackBar.showSnackBar(title: message, message: '', backgroundColor: snackBarError);
+        }
+
+      });
+
     }
   }
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +74,6 @@ class _LoginScreenState extends State<LoginScreen>
                         }
                         return null;
                       },
-                      onSaved: (value) {
-                        _userEmail = value;
-                      },
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         labelText: 'Email',
@@ -75,9 +87,6 @@ class _LoginScreenState extends State<LoginScreen>
                           return 'Please enter your Password';
                         }
                         return null;
-                      },
-                      onSaved: (value) {
-                        _userPassword = value;
                       },
                       textInputAction: TextInputAction.done,
                       controller: passwordController,

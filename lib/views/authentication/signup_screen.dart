@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:skitoboxes/constants/colors.dart';
@@ -17,11 +19,6 @@ class _SignupScreenState extends State<SignupScreen>
   final _formKey = GlobalKey<FormState>();
   bool obSecure = true;
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-
   void _trySubmit() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
@@ -29,8 +26,39 @@ class _SignupScreenState extends State<SignupScreen>
     if (isValid) {
       _formKey.currentState!.save();
       // IF THE DATA IS VALIDATED, TAKE USER TO OTP SCREEN FOR CONFIRMATION
+      authController
+          .registerUser(
+              authDataHandlingController.nameController.value.text,
+              authDataHandlingController.emailController.value.text,
+              authDataHandlingController.passwordController.value.text,
+              authDataHandlingController.phoneController.value.text)
+          .then((response) {
 
+        // TODO:: TESTING ONLY
+        // navigationController.sheetController
+        //     .animateToPage(2,
+        //     duration: const Duration(milliseconds: 500),
+        //     curve: Curves.easeInOut);
 
+        if (response.statusCode == 200) {
+          String message = jsonDecode(response.body)['message'];
+          CustomSnackBar.showSnackBar(
+              title: message, message: '', backgroundColor: snackBarSuccess);
+
+          // VERIFY OTP
+          navigationController.sheetController.animateToPage(2,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut);
+        } else if (response.statusCode == 500) {
+          String message = jsonDecode(response.body)['message'];
+          CustomSnackBar.showSnackBar(
+              title: message, message: '', backgroundColor: snackBarError);
+        } else {
+          String message = jsonDecode(response.body)['error'];
+          CustomSnackBar.showSnackBar(
+              title: message, message: '', backgroundColor: snackBarError);
+        }
+      });
     }
   }
 
@@ -99,10 +127,8 @@ class _SignupScreenState extends State<SignupScreen>
                         }
                         return null;
                       },
-                      onSaved: (value) {
-                        authDataHandlingController.userName.value = value!;
-                      },
-                      controller: nameController,
+                      controller:
+                          authDataHandlingController.nameController.value,
                       decoration: InputDecoration(
                         labelText: 'Username',
                         labelStyle: Theme.of(context).textTheme.bodyText1,
@@ -110,15 +136,13 @@ class _SignupScreenState extends State<SignupScreen>
                     ),
                     TextFormField(
                       textInputAction: TextInputAction.next,
-                      controller: emailController,
+                      controller:
+                          authDataHandlingController.emailController.value,
                       validator: (value) {
                         if (value!.isEmpty || !value.contains("@")) {
                           return 'Please enter a valid email address';
                         }
                         return null;
-                      },
-                      onSaved: (value) {
-                        authDataHandlingController.userEmail.value  = value!;
                       },
                       decoration: InputDecoration(
                         labelText: 'Email',
@@ -127,7 +151,8 @@ class _SignupScreenState extends State<SignupScreen>
                     ),
                     TextFormField(
                       textInputAction: TextInputAction.done,
-                      controller: passwordController,
+                      controller:
+                          authDataHandlingController.passwordController.value,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter your password';
@@ -135,9 +160,6 @@ class _SignupScreenState extends State<SignupScreen>
                           return "your password must have 8 characters";
                         }
                         return null;
-                      },
-                      onSaved: (value) {
-                        authDataHandlingController.userPassword.value  = value!;
                       },
                       obscureText: obSecure,
                       decoration: InputDecoration(
@@ -155,6 +177,26 @@ class _SignupScreenState extends State<SignupScreen>
                                     setState(() => obSecure = !obSecure),
                               ),
                         labelText: 'Password',
+                        labelStyle: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                    TextFormField(
+                      maxLength: 9,
+                      textInputAction: TextInputAction.done,
+                      controller:
+                          authDataHandlingController.phoneController.value,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your phone number';
+                        } else if (value.length != 9) {
+                          return 'Invalid phone number';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        prefixText: '+ 92 - 3',
+                        labelText: 'Phone',
                         labelStyle: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
