@@ -12,6 +12,17 @@ class AuthController extends GetxController {
   
   var currentUser = AuthModel().obs;
 
+  void getUserById(String id) async {
+    var url = Uri.parse('$base_url/auth/all/$id');
+    try {
+      http.Response response = await http.get(url);
+      if (response.statusCode == 200) {
+        currentUser.value = AuthModel.fromJson(jsonDecode(response.body)['result']);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 
   Future<http.Response> registerUser(String username, String email, String password, String phoneNumber) async {
     var url = Uri.parse('$base_url/auth/register');
@@ -117,20 +128,17 @@ class AuthController extends GetxController {
 
   void saveUserState(String id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("loggedIn", true);
     prefs.setString('userId', id);
   }
 
   Future getUserId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(prefs.getInt('userId') != null){
-      return prefs.getInt('userId');
-    }
+    return prefs.getString('userId');
   }
 
-  void logOutUser(BuildContext context) async {
+  void logOutUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("loggedIn", false);
+    prefs.remove('userId');
     // Get.offAll(() => LoginPage());
   }
 

@@ -1,8 +1,10 @@
 // STATIC ROUTES NAME
 import 'package:flutter/material.dart';
+import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/home_screen.dart';
 import 'package:skitoboxes/models/address.dart';
 import 'package:skitoboxes/models/box.dart';
+import 'package:skitoboxes/views/authentication/auth_decider.dart';
 import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
 import 'package:skitoboxes/views/box_details.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
@@ -18,6 +20,7 @@ import 'package:skitoboxes/views/splash/main_splash_screen.dart';
 const String initialRoute = '/';
 const String signUp = '/signup';
 const String landing = '/landing';
+const String authDecider = '/auth-decider';
 const String bodyAuth = '/bodyAuth';
 const String homeScreen = '/home-screen';
 const String boxDetails = '/box-details';
@@ -28,6 +31,7 @@ const String manageAddress = '/manage-address';
 const String addressForm = '/address-form';
 const String managePayment = '/manage-payment';
 const String addPayment = '/add-payment';
+const String signOut = '/sign-out';
 
 // ignore: todo
 // TODO : ROUTES GENERATOR CLASS THAT CONTROLS THE FLOW OF NAVIGATION/ROUTING
@@ -46,11 +50,14 @@ class RouteGenerator {
       case landing:
         return _getPageRoute(LandingPage());
 
+      case authDecider:
+        return _getPageRoute(const AuthDecider());
+
       case bodyAuth:
         return _getPageRoute(const AuthPageViewer());
 
       case homeScreen:
-        return _getPageRoute(HomeScreen());
+        return _getPageRoute(const HomeScreen());
 
       case boxDetails:
         return _getPageRoute(BoxDetails(box: args['boxDetails'] as Box));
@@ -59,10 +66,10 @@ class RouteGenerator {
         return _getPageRoute(CartScreen());
 
       case subscriptionScreen:
-        return _getPageRoute(SubscriptionScreen());
+        return _getPageRoute(const SubscriptionScreen());
 
       case payment:
-        return _getPageRoute(PaymentScreen());
+        return _getPageRoute(const PaymentScreen());
 
       case manageAddress:
         return _getPageRoute(ManageAddressScreen());
@@ -79,6 +86,10 @@ class RouteGenerator {
 
       case addPayment:
         return _getPageRoute(AddPaymentScreen());
+
+      case signOut:
+        authController.logOutUser();
+        return _getPageRoute(LandingPage());
 
       default:
         return _errorRoute();

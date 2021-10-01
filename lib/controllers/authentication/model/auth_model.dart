@@ -25,7 +25,7 @@ class AuthModel {
 
   AuthModel.fromJson(Map<String, dynamic> json) {
     mongodbId = json['_id'];
-    name = json['name'];
+    name = json['username'];
     email = json['email'];
     phoneNumber = json['phoneNumber'];
     imageUrl = json['imageUrl'];

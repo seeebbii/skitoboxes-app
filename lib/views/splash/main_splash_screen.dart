@@ -18,7 +18,7 @@ class _MainSplashScreenState extends State<MainSplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 4),
-        () => navigationController.getOffAll(landing));
+        () => navigationController.getOffAll(authDecider));
   }
 
   @override

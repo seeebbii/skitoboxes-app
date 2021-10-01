@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:skitoboxes/constants/colors.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/router/route_generator.dart';
@@ -19,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     RadioCardModel(
         false, Icons.notifications_active_outlined, 'Notifications', ''),
     RadioCardModel(false, Icons.settings_outlined, 'Settings', ''),
-    RadioCardModel(false, Icons.logout_outlined, 'Sign Out', ''),
+    RadioCardModel(false, Icons.logout_outlined, 'Sign Out', signOut),
   ];
 
   @override
@@ -48,11 +49,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   dividerColor: Colors.transparent,
                 ),
                 child: ExpansionTile(
-                  title: Text('Profilename',
+                  title: Obx(() => Text('${authController.currentUser.value.name}',
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
+                          .copyWith(fontSize: 18, fontWeight: FontWeight.bold))),
                   subtitle: Text('@profilename',
                       style: Theme.of(context).textTheme.bodyText1),
                   leading: CircleAvatar(
