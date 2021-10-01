@@ -16,9 +16,8 @@ void main() async {
   // INITIALIZING IMPORTANT GET X CONTROLLERS
   Get.put(NavigationController());
   Get.put(AuthController());
-  Get.put(
-    AuthDataHandlingController(),
-  );
+  Get.put(AuthDataHandlingController());
+  Get.put(OrderController());
 
   runApp(const MyApp());
 }

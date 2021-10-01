@@ -35,8 +35,10 @@ const String addPayment = '/add-payment';
 class RouteGenerator {
   // FUNCTION THAT HANDLES ROUTING
   static Route<dynamic> onGeneratedRoutes(RouteSettings settings) {
-    final args = settings.arguments as Map;
-
+    late dynamic args;
+    if(settings.arguments != null){
+      args = settings.arguments as Map;
+    }
     switch (settings.name) {
       case initialRoute:
         return _getPageRoute(const MainSplashScreen());
@@ -66,9 +68,10 @@ class RouteGenerator {
         return _getPageRoute(ManageAddressScreen());
 
       case addressForm:
+
         return _getPageRoute(AddressForm(
-          typeMode: args['typeMode'] as FormType,
-          address: args['address'] as Address,
+          typeMode: args['typeMode'],
+          address: args['address'],
         ));
 
       case managePayment:
