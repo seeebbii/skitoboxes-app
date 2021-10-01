@@ -32,21 +32,15 @@ class _SignupScreenState extends State<SignupScreen>
               authDataHandlingController.passwordController.value.text,
               authDataHandlingController.phoneController.value.text)
           .then((response) {
-        // TODO:: TESTING ONLY
-        // navigationController.sheetController
-        //     .animateToPage(2,
-        //     duration: const Duration(milliseconds: 500),
-        //     curve: Curves.easeInOut);
-
         if (response.statusCode == 200) {
           String message = jsonDecode(response.body)['message'];
           CustomSnackBar.showSnackBar(
               title: message, message: '', backgroundColor: snackBarSuccess);
-
-          // VERIFY OTP
+          authDataHandlingController.startTimer();
           navigationController.sheetController.animateToPage(2,
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut);
+
         } else if (response.statusCode == 500) {
           String message = jsonDecode(response.body)['message'];
           CustomSnackBar.showSnackBar(
@@ -148,7 +142,7 @@ class _SignupScreenState extends State<SignupScreen>
                       ),
                     ),
                     TextFormField(
-                      textInputAction: TextInputAction.done,
+                      textInputAction: TextInputAction.next,
                       controller:
                           authDataHandlingController.passwordController.value,
                       validator: (value) {

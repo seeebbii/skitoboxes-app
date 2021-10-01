@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:rive/rive.dart';
@@ -24,28 +25,27 @@ class _OtpScreenState extends State<OtpScreen> {
   String completedPin = '';
 
   _trySubmit(String pin) async {
-    final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-
-    if (isValid) {
-      _formKey.currentState!.save();
-
-      authController
-          .verifyAccount(
-              authDataHandlingController.nameController.value.text,
-              authDataHandlingController.emailController.value.text,
-              authDataHandlingController.passwordController.value.text,
-              authDataHandlingController.phoneController.value.text,
-              pin)
-          .then((response) {
-            if(response.statusCode == 200){
-              String message = jsonDecode(response.body)['message'];
-              CustomSnackBar.showSnackBar(title: message, message: '', backgroundColor: snackBarSuccess);
-            }else if(response.statusCode == 500){
-              CustomSnackBar.showSnackBar(title: "Invalid Otp", message: '', backgroundColor: snackBarError);
-            }
-      });
-    }
+    authController
+        .verifyAccount(
+            authDataHandlingController.nameController.value.text,
+            authDataHandlingController.emailController.value.text,
+            authDataHandlingController.passwordController.value.text,
+            authDataHandlingController.phoneController.value.text,
+            pin)
+        .then((response) {
+      if (response.statusCode == 200) {
+        String message = jsonDecode(response.body)['message'];
+        CustomSnackBar.showSnackBar(
+            title: message, message: '', backgroundColor: snackBarSuccess);
+        navigationController.sheetController.animateToPage(0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut);
+      } else if (response.statusCode == 500) {
+        CustomSnackBar.showSnackBar(
+            title: "Invalid Otp", message: '', backgroundColor: snackBarError);
+      }
+    });
   }
 
   getMobileFormWidget(context) {
@@ -93,7 +93,51 @@ class _OtpScreenState extends State<OtpScreen> {
                         .bodyText1!
                         .copyWith(color: Colors.grey.shade600),
                     textAlign: TextAlign.center,
-                  )
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                  Obx(
+                    () => authDataHandlingController.start.value == 0
+                        ? TextButton(
+                            child: const Text('Resend Otp'),
+                            onPressed: () {
+                              authController
+                                  .resendOtp(
+                                      authDataHandlingController
+                                          .nameController.value.text,
+                                      authDataHandlingController
+                                          .emailController.value.text,
+                                      authDataHandlingController
+                                          .passwordController.value.text,
+                                      authDataHandlingController
+                                          .phoneController.value.text)
+                                  .then((response) {
+                                if (response.statusCode == 200) {
+                                  String message = jsonDecode(response.body)['message'];
+                                  CustomSnackBar.showSnackBar(
+                                      title: message,
+                                      message: '',
+                                      backgroundColor: snackBarSuccess);
+                                } else if (response.statusCode == 500) {
+                                  String message =
+                                      jsonDecode(response.body)['message'];
+                                  CustomSnackBar.showSnackBar(
+                                      title: message,
+                                      message: '',
+                                      backgroundColor: snackBarError);
+                                }
+                              });
+                              authDataHandlingController.startTimer();
+                            },
+                          )
+                        : Text(
+                            '${authDataHandlingController.start.value}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(color: Colors.grey.shade800),
+                            textAlign: TextAlign.center,
+                          ),
+                  ),
                 ],
               ),
             ),
@@ -134,7 +178,11 @@ class _OtpScreenState extends State<OtpScreen> {
                     style: Theme.of(context).primaryTextTheme.headline5,
                   ),
                   FloatingActionButton(
-                    onPressed: verify ?  _trySubmit(completedPin) : null,
+                    onPressed: verify
+                        ? () {
+                            _trySubmit(completedPin);
+                          }
+                        : null,
                     child: const Icon(
                       Icons.arrow_forward_ios,
                       color: Colors.white,
