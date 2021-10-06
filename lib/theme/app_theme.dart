@@ -17,7 +17,7 @@ ThemeData myTheme = ThemeData(
         color: Colors.black,
       ),
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       color: Colors.white,
       elevation: 0,
       iconTheme: IconThemeData(color: Colors.black),
