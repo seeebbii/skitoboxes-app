@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/constants/controllers.dart';
+import 'package:skitoboxes/views/authentication/login_screen.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
 import 'package:skitoboxes/views/splash/main_splash_screen.dart';
 

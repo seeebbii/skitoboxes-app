@@ -313,7 +313,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Container(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    navigationController.getOffAll(orderConfirmed);
+                  },
                   child: Text(
                     'Place Order',
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(

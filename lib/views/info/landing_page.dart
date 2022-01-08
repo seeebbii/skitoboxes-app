@@ -55,7 +55,7 @@ class LandingPage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Jump to Home',
+                    'Landing Page',
                     style: Theme.of(context)
                         .primaryTextTheme
                         .headline5!

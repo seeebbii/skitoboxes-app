@@ -2,18 +2,20 @@
 import 'package:flutter/material.dart';
 import 'package:skitoboxes/constants/controllers.dart';
 import 'package:skitoboxes/home_screen.dart';
-import 'package:skitoboxes/models/address.dart';
 import 'package:skitoboxes/models/box.dart';
 import 'package:skitoboxes/views/authentication/auth_decider.dart';
 import 'package:skitoboxes/views/authentication/auth_page_viewer.dart';
+import 'package:skitoboxes/views/bottom_navbar/wishlist_screen.dart';
 import 'package:skitoboxes/views/box_details.dart';
 import 'package:skitoboxes/views/info/landing_page.dart';
 import 'package:skitoboxes/views/profile_settings/address/address_form.dart';
 import 'package:skitoboxes/views/profile_settings/address/manage_address_screen.dart';
 import 'package:skitoboxes/views/profile_settings/payment/add_payment_screen.dart';
 import 'package:skitoboxes/views/profile_settings/payment/manage_payment.dart';
+import 'package:skitoboxes/views/profile_settings/pending_orders.dart';
 import 'package:skitoboxes/views/profile_settings/subscription_screen.dart';
 import 'package:skitoboxes/views/purchase/cart_screen.dart';
+import 'package:skitoboxes/views/purchase/order_confirmed.dart';
 import 'package:skitoboxes/views/purchase/payment_screen.dart';
 import 'package:skitoboxes/views/splash/main_splash_screen.dart';
 
@@ -31,6 +33,9 @@ const String manageAddress = '/manage-address';
 const String addressForm = '/address-form';
 const String managePayment = '/manage-payment';
 const String addPayment = '/add-payment';
+const String orderConfirmed = '/order-confirmed';
+const String pendingOrder = '/pending-order';
+const String wishList = '/wish-list';
 const String signOut = '/sign-out';
 
 // ignore: todo
@@ -40,7 +45,7 @@ class RouteGenerator {
   // FUNCTION THAT HANDLES ROUTING
   static Route<dynamic> onGeneratedRoutes(RouteSettings settings) {
     late dynamic args;
-    if(settings.arguments != null){
+    if (settings.arguments != null) {
       args = settings.arguments as Map;
     }
     switch (settings.name) {
@@ -75,7 +80,6 @@ class RouteGenerator {
         return _getPageRoute(ManageAddressScreen());
 
       case addressForm:
-
         return _getPageRoute(AddressForm(
           typeMode: args['typeMode'],
           address: args['address'],
@@ -86,6 +90,15 @@ class RouteGenerator {
 
       case addPayment:
         return _getPageRoute(AddPaymentScreen());
+
+      case orderConfirmed:
+        return _getPageRoute(OrderConfirmedScreen());
+
+      case pendingOrder:
+        return _getPageRoute(PendingOrdersScreen());
+
+      case wishList:
+        return _getPageRoute(WishlistScreen());
 
       case signOut:
         authController.logOutUser();

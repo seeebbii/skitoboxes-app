@@ -15,8 +15,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final List<RadioCardModel> cardData = [
     RadioCardModel(false, Icons.subscriptions_outlined, 'Subscriptions',
         subscriptionScreen),
-    RadioCardModel(false, Icons.delivery_dining_outlined, 'Orders', ''),
-    RadioCardModel(false, Icons.favorite_outline, 'Wishlist', ''),
+    RadioCardModel(
+        false, Icons.delivery_dining_outlined, 'Orders', pendingOrder),
+    RadioCardModel(false, Icons.favorite_outline, 'Wishlist', wishList),
     RadioCardModel(
         false, Icons.notifications_active_outlined, 'Notifications', ''),
     RadioCardModel(false, Icons.settings_outlined, 'Settings', ''),
@@ -49,12 +50,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   dividerColor: Colors.transparent,
                 ),
                 child: ExpansionTile(
-                  title: Obx(() => Text('${authController.currentUser.value.name}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(fontSize: 18, fontWeight: FontWeight.bold))),
-                  subtitle: Text('@profilename',
+                  title: Obx(() => Text(
+                      '${authController.currentUser.value.name}',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontSize: 18, fontWeight: FontWeight.bold))),
+                  subtitle: Text('${authController.currentUser.value.email}',
                       style: Theme.of(context).textTheme.bodyText1),
                   leading: CircleAvatar(
                     child: Icon(Icons.person),
